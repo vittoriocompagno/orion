@@ -16,31 +16,45 @@ import {
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
 import { HomeNav, Footer, PricingTable } from '@/components/shared'
-import { GradientFollower } from '@/components/shared/GradientFollower'
+import { GradientFollower } from '@/components/shared/utils/GradientFollower'
+
 import { Section } from '@/components/ui/Section'
 import { Card } from '@/components/ui/Card'
 import { Heading } from '@/components/ui/Heading'
 import { Marquee } from '@/components/shared/Marquee/Marquee'
+import { SearchBar } from '@/components/shared/Search/SearchBar'
+
+// Feature definitions with consistent structure and better typing
+interface Feature {
+  title: string
+  description: string
+  icon: React.ElementType
+  delay: number
+  category?: 'monitoring' | 'analysis' | 'management'
+}
 
 export default function HomePage() {
-  const features = [
+  const features: Feature[] = [
     {
       title: 'SCANSIONE WEB',
       description: 'Monitora costantemente la tua presenza online su Google e altre piattaforme di recensioni.',
       icon: ChatBubbleBottomCenterTextIcon,
       delay: 0.4,
+      category: 'monitoring'
     },
     {
       title: 'ANALISI REPUTAZIONE',
       description: 'Valutazione approfondita del sentiment e dell\'impatto delle recensioni sulla tua reputazione.',
       icon: ChartBarIcon,
       delay: 0.5,
+      category: 'analysis'
     },
     {
       title: 'GESTIONE PROATTIVA',
       description: 'Intervieni tempestivamente con risposte personalizzate e strategie di miglioramento.',
       icon: BoltIcon,
       delay: 0.6,
+      category: 'management'
     }
   ]
 
@@ -131,51 +145,27 @@ export default function HomePage() {
         <div className="grid-pattern-overlay opacity-30" />
         
         <div className="max-w-[90rem] w-full mx-auto relative py-20">
-          <motion.div 
-            className="floating-element max-w-4xl mx-auto relative p-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-          >
-            {/* Code-like decoration */}
-            <div className="absolute -left-8 top-4 font-mono text-gray-300 select-none">
-              <div>01</div>
-              <div>02</div>
-              <div>03</div>
-            </div>
-
-            <div className="space-y-4 text-center">
+          <div className="max-w-4xl mx-auto px-4">
+            <div className="space-y-4 text-center mb-12">
               <div className="space-y-2">
-                <div className="font-mono text-[clamp(3.5rem,8vw,6.5rem)] font-bold leading-[0.9] tracking-tight">
-                  LA TUA
+                <div className="font-mono text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-tight tracking-tight">
+                  IL TUO MANAGER
                   <br />
-                  REPUTAZIONE
-                </div>
-                <div className="flex flex-wrap items-baseline justify-center gap-4 text-[clamp(2.5rem,6vw,4.5rem)] leading-none tracking-tight">
-                  <span className="font-mono font-bold">MANAGER</span>
-                  <span className="font-mono text-gray-400">AUTOMATIZZATO_</span>
+                  DELLA REPUTAZIONE
+                  <br />
+                  <span className="text-gray-400">AUTOMATIZZATO_</span>
                 </div>
               </div>
             </div>
 
-            {/* Code-like snippet */}
+            {/* Search Bar */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="relative mt-12 mb-8 pl-4 border-l-2 border-black/10 font-mono max-w-lg mx-auto"
+              className="mb-12"
             >
-              <div className="text-xl text-gray-600 leading-relaxed">
-                <span className="text-purple-600">const</span> <span className="text-blue-600">orion</span> = {'{'}
-                <br />
-                &nbsp;&nbsp;scansione: <span className="text-green-600">'24/7'</span>,
-                <br />
-                &nbsp;&nbsp;protezione: <span className="text-green-600">'reputazione'</span>,
-                <br />
-                &nbsp;&nbsp;ambito: <span className="text-green-600">'presenza digitale'</span>
-                <br />
-                {'}'};
-              </div>
+              <SearchBar />
             </motion.div>
 
             <motion.div 
@@ -196,7 +186,7 @@ export default function HomePage() {
                 14 giorni di prova gratuita
               </span>
             </motion.div>
-          </motion.div>
+          </div>
 
           {/* Stats Grid */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto px-4">
@@ -256,26 +246,44 @@ export default function HomePage() {
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-sans text-xl mb-12 text-gray-600"
+            className="font-sans text-xl mb-12 text-gray-600 max-w-2xl"
           >
-            Tutto ciò di cui hai bisogno per gestire le tue recensioni
+            Tutto ciò di cui hai bisogno per gestire le tue recensioni in modo efficiente
           </motion.p>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {features.map(({ title, description, icon: Icon, delay }, index) => (
+            {features.map(({ title, description, icon: Icon, delay, category }, index) => (
               <Card 
                 key={title}
                 delay={delay}
-                className="p-8 aspect-[3/4]"
+                className="p-8 aspect-[3/4] group relative overflow-hidden"
                 hover={true}
               >
-                <div className="flex items-center gap-4 mb-4">
-                  <span className="font-mono text-xl text-black/50">0{index + 1}_</span>
-                  <Icon className="w-6 h-6 text-black" />
+                {/* Category Badge */}
+                <div className="absolute top-4 right-4">
+                  <span className="font-mono text-xs px-2 py-1 bg-black/5 rounded-full">
+                    {category?.toUpperCase()}
+                  </span>
                 </div>
-                
-                <h3 className="font-mono text-2xl mb-4">{title}</h3>
-                <p className="font-sans text-gray-600">{description}</p>
+
+                {/* Feature Content */}
+                <div className="h-full flex flex-col">
+                  <div className="flex items-center gap-4 mb-6">
+                    <span className="font-mono text-xl text-black/50">0{index + 1}_</span>
+                    <Icon className="w-6 h-6 text-black transition-transform group-hover:scale-110" />
+                  </div>
+                  
+                  <h3 className="font-mono text-2xl mb-4 group-hover:text-accent transition-colors">
+                    {title}
+                  </h3>
+                  
+                  <p className="font-sans text-gray-600 group-hover:text-gray-900 transition-colors">
+                    {description}
+                  </p>
+                </div>
+
+                {/* Decorative Elements */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </Card>
             ))}
           </div>

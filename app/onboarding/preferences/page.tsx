@@ -1,12 +1,10 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function MarketingPreferences() {
   const router = useRouter()
-  const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -22,19 +20,7 @@ export default function MarketingPreferences() {
     setLoading(true)
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) throw new Error('No user found')
-
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({
-          marketing_preferences: preferences,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', user.id)
-
-      if (updateError) throw updateError
-
+      // For now, just redirect to dashboard
       router.push('/dashboard')
     } catch (err: any) {
       setError(err.message)

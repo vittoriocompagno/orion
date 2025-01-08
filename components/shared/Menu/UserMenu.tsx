@@ -46,7 +46,9 @@ export function UserMenu({ user }: UserMenuProps) {
         )}
         
         <DropdownMenuItem asChild>
-          <LogoutLink className="w-full flex items-center gap-2 cursor-pointer">
+          <LogoutLink 
+            className="w-full flex items-center gap-2 cursor-pointer px-3 py-2 text-sm text-gray-700 hover:text-black hover:bg-gray-100 transition-colors"
+          >
             <LogOut size={16} />
             ESCI
           </LogoutLink>

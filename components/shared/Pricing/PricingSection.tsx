@@ -2,7 +2,7 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import {PricingCard} from '@/components/sections/PricingCard';
+import {PricingCard} from '@/components/shared/Pricing/PricingCard';
 
 interface PricingPlan {
   name: string;

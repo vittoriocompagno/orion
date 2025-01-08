@@ -16,24 +16,24 @@ import {
   UserGroupIcon,
   BuildingOfficeIcon
 } from '@heroicons/react/24/outline'
-
+import { HomeNav } from '@/components/shared'
 export default function HomePage() {
   const features = [
     {
-      title: 'RECENSIONI UNIFICATE',
-      description: 'Tutte le tue recensioni Google in un\'unica dashboard. Monitora, gestisci e rispondi facilmente.',
+      title: 'SCANSIONE WEB',
+      description: 'Monitora costantemente la tua presenza online su Google e altre piattaforme di recensioni.',
       icon: ChatBubbleBottomCenterTextIcon,
       delay: 0.4,
     },
     {
-      title: 'ANALISI DEL SENTIMENT',
-      description: 'Analisi automatica del tono delle recensioni. Comprendi meglio il feedback dei tuoi clienti.',
+      title: 'ANALISI REPUTAZIONE',
+      description: 'Valutazione approfondita del sentiment e dell\'impatto delle recensioni sulla tua reputazione.',
       icon: ChartBarIcon,
       delay: 0.5,
     },
     {
-      title: 'RISPOSTE AUTOMATICHE',
-      description: 'Rispondi automaticamente alle recensioni in base al loro sentiment. Risparmia tempo mantenendo un engagement costante.',
+      title: 'GESTIONE PROATTIVA',
+      description: 'Intervieni tempestivamente con risposte personalizzate e strategie di miglioramento.',
       icon: BoltIcon,
       delay: 0.6,
     }
@@ -41,37 +41,37 @@ export default function HomePage() {
 
   const steps = [
     {
-      title: 'Connetti il tuo account Google',
-      description: 'Collega il tuo profilo Google Business per iniziare a monitorare le recensioni.',
+      title: 'Scansione Completa',
+      description: 'Analisi approfondita della tua presenza online su tutte le piattaforme.',
       icon: CheckCircleIcon,
     },
     {
-      title: 'Analisi Automatica',
-      description: 'L\'AI analizza il sentiment delle recensioni e le categorizza automaticamente.',
+      title: 'Report Dettagliato',
+      description: 'Valutazione del sentiment e identificazione delle aree di miglioramento.',
       icon: SparklesIcon,
     },
     {
-      title: 'Rispondi Velocemente',
-      description: 'Utilizza le risposte automatiche o personalizza i template suggeriti.',
+      title: 'Azione Immediata',
+      description: 'Implementazione di strategie per migliorare la tua reputazione online.',
       icon: ClockIcon,
     }
   ]
 
   const testimonials = [
     {
-      quote: "Orion ha trasformato completamente il modo in cui gestiamo le recensioni dei clienti. Il risparmio di tempo è incredibile.",
+      quote: "Orion è come avere un Reputation Manager dedicato 24/7. Ha trasformato completamente la nostra presenza online.",
       author: "Marco Bianchi",
       role: "Proprietario, Ristorante Da Marco",
       rating: 5
     },
     {
-      quote: "L'analisi del sentiment ci aiuta a capire meglio i nostri clienti. Le risposte automatiche sono sempre appropriate.",
+      quote: "Grazie a Orion abbiamo scoperto e risolto problemi di reputazione che non sapevamo di avere.",
       author: "Laura Rossi",
       role: "Marketing Manager, Hotel Belvedere",
       rating: 5
     },
     {
-      quote: "Un tool indispensabile per chi gestisce più sedi. Ora abbiamo una visione completa della nostra reputazione online.",
+      quote: "Un alleato indispensabile per chi vuole mantenere una reputazione impeccabile online.",
       author: "Giuseppe Verdi",
       role: "CEO, Catena Retail",
       rating: 5
@@ -80,18 +80,18 @@ export default function HomePage() {
 
   const benefits = [
     {
-      title: 'RISPARMIO DI TEMPO',
-      description: 'Automatizza la gestione delle recensioni e risparmia fino al 95% del tempo.',
+      title: 'MONITORAGGIO 24/7',
+      description: 'Scansione continua della tua presenza online su tutte le piattaforme.',
       icon: ClockIcon,
     },
     {
-      title: 'MIGLIORE ENGAGEMENT',
-      description: 'Aumenta il coinvolgimento dei clienti con risposte rapide e pertinenti.',
+      title: 'INTERVENTO RAPIDO',
+      description: 'Gestione immediata delle criticità per proteggere la tua reputazione.',
       icon: ArrowTrendingUpIcon,
     },
     {
-      title: 'ANALISI DETTAGLIATE',
-      description: 'Ottieni insights approfonditi sul sentiment dei tuoi clienti.',
+      title: 'ANALISI STRATEGICA',
+      description: 'Report dettagliati e suggerimenti per migliorare la tua immagine online.',
       icon: ChartPieIcon,
     }
   ]
@@ -99,41 +99,17 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-[#f5f5f5]">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 bg-[#f5f5f5]/80 backdrop-blur-md z-50 border-b border-black/5">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-          <Link 
-            href="/" 
-            className="font-mono text-2xl text-gray-900 hover:text-black relative group"
-          >
-            ORION_
-            <span className="absolute -bottom-1 left-0 w-0 h-px bg-black transition-all group-hover:w-full"></span>
-          </Link>
-          
-          <div className="space-x-2">
-            <Link
-              href="/auth/login"
-              className="px-4 py-2 font-mono text-sm text-gray-700 hover:text-black transition-colors"
-            >
-              ACCEDI
-            </Link>
-            <Link
-              href="/auth/signup"
-              className="px-4 py-2 font-mono text-sm bg-black text-white hover:bg-white hover:text-black border border-black transition-colors rounded-sm"
-            >
-              PROVA GRATIS
-            </Link>
-          </div>
-        </div>
-      </header>
-
+      <HomeNav />
       {/* Hero Section */}
       <motion.section 
-        className="pt-32 pb-20 px-4 relative overflow-hidden"
+        className="pt-40 pb-32 px-4 relative overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-white/50 to-transparent pointer-events-none" />
+        {/* Minimal background pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015]" />
+        
         <div className="max-w-6xl mx-auto relative">
           <motion.div 
             className="max-w-3xl"
@@ -141,74 +117,92 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            <h1 className="font-mono text-5xl font-bold leading-tight mb-6">
-              GESTISCI LE TUE RECENSIONI
+            {/* Accent line */}
+            <div className="w-24 h-1 bg-black mb-8" />
+            
+            <h1 className="font-mono text-6xl font-bold leading-tight mb-8 tracking-tight">
+              IL TUO REPUTATION
               <br />
-              <span className="text-gray-500">CON L'AIUTO DELL'AI</span>
+              <span className="inline-flex items-center gap-4">
+                MANAGER
+                <span className="text-gray-500 font-normal">AUTOMATIZZATO_</span>
+              </span>
             </h1>
-            <p className="font-mono text-lg text-gray-700 mb-8">
-              Orion unifica le tue recensioni Google, analizza il sentiment e automatizza le risposte.
-              Risparmia tempo e migliora la tua reputazione online.
+            <p className="font-mono text-xl text-gray-700 mb-12 leading-relaxed max-w-2xl">
+              Orion scansiona il web 24/7 per proteggere e migliorare la tua reputazione online.
+              <span className="block mt-4 font-bold">La tua presenza digitale sotto controllo, sempre.</span>
             </p>
-            <Link
-              href="/auth/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-mono text-sm hover:bg-white hover:text-black border border-black transition-colors group rounded-sm"
-            >
-              INIZIA ORA
-              <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <div className="flex items-center gap-8">
+              <Link
+                href="/auth/signup"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-mono text-sm hover:bg-white hover:text-black border-2 border-black transition-all duration-300 group rounded-sm hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)] transform hover:-translate-y-0.5"
+              >
+                INIZIA ORA
+                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <span className="font-mono text-sm text-gray-500">
+                14 giorni di prova gratuita
+              </span>
+            </div>
           </motion.div>
 
-          {/* Stats */}
+          {/* Enhanced Stats */}
           <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20 border-t border-black/5 pt-20"
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 pt-20 border-t border-black/10 relative"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            <div className="flex items-start gap-4 p-6 bg-white/50 backdrop-blur-sm rounded-sm border border-black/5">
-              <ClockIcon className="w-8 h-8 flex-shrink-0" />
+            {/* Background accent */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent opacity-20" />
+            
+            <div className="flex items-start gap-6 p-8 bg-white backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-colors group">
+              <ClockIcon className="w-10 h-10 flex-shrink-0 group-hover:scale-110 transition-transform" />
               <div>
-                <div className="font-mono text-4xl font-bold mb-2">95%</div>
-                <div className="font-mono text-sm text-gray-700">Risparmio di tempo nella gestione delle recensioni</div>
+                <div className="font-mono text-5xl font-bold mb-3">24/7</div>
+                <div className="font-mono text-sm text-gray-700">Monitoraggio continuo della reputazione</div>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-6 bg-white/50 backdrop-blur-sm rounded-sm border border-black/5">
-              <UserGroupIcon className="w-8 h-8 flex-shrink-0" />
+            <div className="flex items-start gap-6 p-8 bg-white backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-colors group">
+              <UserGroupIcon className="w-10 h-10 flex-shrink-0 group-hover:scale-110 transition-transform" />
               <div>
-                <div className="font-mono text-4xl font-bold mb-2">24/7</div>
-                <div className="font-mono text-sm text-gray-700">Monitoraggio e risposte automatiche</div>
+                <div className="font-mono text-5xl font-bold mb-3">+85%</div>
+                <div className="font-mono text-sm text-gray-700">Miglioramento della reputazione</div>
               </div>
             </div>
-            <div className="flex items-start gap-4 p-6 bg-white/50 backdrop-blur-sm rounded-sm border border-black/5">
-              <ArrowTrendingUpIcon className="w-8 h-8 flex-shrink-0" />
+            <div className="flex items-start gap-6 p-8 bg-white backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-colors group">
+              <ArrowTrendingUpIcon className="w-10 h-10 flex-shrink-0 group-hover:scale-110 transition-transform" />
               <div>
-                <div className="font-mono text-4xl font-bold mb-2">+45%</div>
-                <div className="font-mono text-sm text-gray-700">Aumento medio dell'engagement</div>
+                <div className="font-mono text-5xl font-bold mb-3">-45%</div>
+                <div className="font-mono text-sm text-gray-700">Riduzione delle criticità</div>
               </div>
             </div>
           </motion.div>
         </div>
       </motion.section>
 
-      {/* How it Works */}
-      <section className="py-20 px-4 bg-white/50 backdrop-blur-sm border-y border-black/5">
-        <div className="max-w-6xl mx-auto">
+      {/* Enhanced How it Works */}
+      <section className="py-32 px-4 bg-white/90 border-y border-black/10 relative overflow-hidden">
+        {/* Minimal background pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015]" />
+        
+        <div className="max-w-6xl mx-auto relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 className="font-mono text-3xl font-bold mb-4">
+            <div className="w-16 h-1 bg-black mx-auto mb-8" />
+            <h2 className="font-mono text-4xl font-bold mb-6">
               COME FUNZIONA
             </h2>
-            <p className="font-mono text-gray-700 max-w-2xl mx-auto">
+            <p className="font-mono text-lg text-gray-700 max-w-2xl mx-auto">
               Inizia a gestire le tue recensioni in modo efficiente in soli tre semplici passaggi
             </p>
           </motion.div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
             {steps.map((step, index) => (
               <motion.div
                 key={step.title}
@@ -217,13 +211,15 @@ export default function HomePage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.1 }}
               >
-                <div className="flex flex-col items-center text-center p-6 bg-white/50 backdrop-blur-sm rounded-sm border border-black/5">
-                  <step.icon className="w-12 h-12 mb-6 text-black" />
-                  <h3 className="font-mono text-lg font-bold mb-4">{step.title}</h3>
-                  <p className="font-mono text-sm text-gray-700">{step.description}</p>
+                <div className="flex flex-col items-center text-center p-8 bg-white/90 backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)]">
+                  <div className="w-16 h-16 flex items-center justify-center bg-black/5 rounded-sm mb-8 group-hover:scale-110 transition-transform">
+                    <step.icon className="w-8 h-8 text-black" />
+                  </div>
+                  <h3 className="font-mono text-xl font-bold mb-4">{step.title}</h3>
+                  <p className="font-mono text-sm text-gray-700 leading-relaxed">{step.description}</p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 right-0 w-full h-px bg-black/5 -translate-y-1/2 translate-x-1/2" />
+                  <div className="hidden md:block absolute top-1/2 right-0 w-full h-px bg-black/10 -translate-y-1/2 translate-x-1/2" />
                 )}
               </motion.div>
             ))}
@@ -231,38 +227,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <motion.h2 
-            className="font-mono text-3xl font-bold mb-12"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            CARATTERISTICHE
-          </motion.h2>
+      {/* Enhanced Features */}
+      <section className="py-32 px-4 relative overflow-hidden">
+        {/* Minimal background pattern */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015]" />
+        
+        <div className="max-w-6xl mx-auto relative">
+          <motion.div className="mb-20">
+            <div className="w-16 h-1 bg-black mb-8" />
+            <motion.h2 
+              className="font-mono text-4xl font-bold mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              CARATTERISTICHE
+            </motion.h2>
+            <p className="font-mono text-lg text-gray-700 max-w-2xl">
+              Strumenti potenti per gestire la tua reputazione online
+            </p>
+          </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {features.map((feature) => (
               <motion.div
                 key={feature.title}
-                className="p-6 bg-white/50 backdrop-blur-sm rounded-sm border border-black/5 group hover:border-black transition-colors"
+                className="p-8 bg-white/90 backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: feature.delay }}
               >
-                <feature.icon className="w-8 h-8 mb-6 text-black" />
-                <h3 className="font-mono text-lg font-bold mb-4">{feature.title}</h3>
-                <p className="font-mono text-sm text-gray-700">{feature.description}</p>
+                <div className="w-12 h-12 flex items-center justify-center bg-black/5 rounded-sm mb-8 group-hover:scale-110 transition-transform">
+                  <feature.icon className="w-6 h-6 text-black" />
+                </div>
+                <h3 className="font-mono text-xl font-bold mb-4">{feature.title}</h3>
+                <p className="font-mono text-sm text-gray-700 leading-relaxed">{feature.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Benefits */}
-      <section className="py-20 px-4 bg-black text-white relative overflow-hidden">
+      {/* Enhanced Benefits */}
+      <section className="py-32 px-4 bg-black text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.2)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-800" />
         
@@ -271,13 +278,14 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 className="font-mono text-3xl font-bold mb-4">
+            <div className="w-16 h-1 bg-white mx-auto mb-8" />
+            <h2 className="font-mono text-4xl font-bold mb-6">
               PERCHÉ SCEGLIERE ORION
             </h2>
-            <p className="font-mono text-gray-400 max-w-2xl mx-auto">
-              Scopri i vantaggi di una gestione intelligente delle recensioni
+            <p className="font-mono text-lg text-gray-400 max-w-2xl mx-auto">
+              Scopri i vantaggi di una gestione intelligente della reputazione
             </p>
           </motion.div>
 
@@ -285,33 +293,38 @@ export default function HomePage() {
             {benefits.map((benefit, index) => (
               <motion.div
                 key={benefit.title}
-                className="p-6 backdrop-blur-sm bg-black/30 rounded-sm border border-white/10 group hover:border-white/30 transition-colors"
+                className="p-8 backdrop-blur-sm bg-white/5 rounded-sm border-2 border-white/10 hover:border-white/30 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(255,255,255,0.1)]"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.1 }}
               >
-                <benefit.icon className="w-8 h-8 mb-6 text-white" />
-                <h3 className="font-mono text-lg font-bold mb-4">{benefit.title}</h3>
-                <p className="font-mono text-sm text-gray-400">{benefit.description}</p>
+                <div className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-sm mb-8 group-hover:scale-110 transition-transform">
+                  <benefit.icon className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-mono text-xl font-bold mb-4">{benefit.title}</h3>
+                <p className="font-mono text-sm text-gray-400 leading-relaxed">{benefit.description}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section className="py-20 px-4 bg-white/50 backdrop-blur-sm border-y border-black/5">
-        <div className="max-w-6xl mx-auto">
+      {/* Enhanced Testimonials */}
+      <section className="py-32 px-4 bg-white/80 backdrop-blur-sm border-y border-black/10 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.02)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px]" />
+        
+        <div className="max-w-6xl mx-auto relative">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-center mb-16"
+            className="text-center mb-20"
           >
-            <h2 className="font-mono text-3xl font-bold mb-4">
+            <div className="w-16 h-1 bg-black mx-auto mb-8" />
+            <h2 className="font-mono text-4xl font-bold mb-6">
               COSA DICONO I NOSTRI CLIENTI
             </h2>
-            <p className="font-mono text-gray-700 max-w-2xl mx-auto">
+            <p className="font-mono text-lg text-gray-700 max-w-2xl mx-auto">
               Scopri come Orion ha aiutato altre aziende a migliorare la loro presenza online
             </p>
           </motion.div>
@@ -320,26 +333,29 @@ export default function HomePage() {
             {testimonials.map((testimonial, index) => (
               <motion.div
                 key={index}
-                className="p-6 bg-white/80 backdrop-blur-sm rounded-sm border border-black/5 relative"
+                className="p-8 bg-white/90 backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)] relative"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 + index * 0.1 }}
               >
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-6">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <StarIcon key={i} className="w-5 h-5 text-black fill-current" />
                   ))}
                 </div>
-                <p className="font-mono text-sm text-gray-700 mb-6">
+                <p className="font-mono text-base text-gray-700 mb-8 leading-relaxed">
                   "{testimonial.quote}"
                 </p>
                 <div>
                   <div className="font-mono text-sm font-bold">
                     {testimonial.author}
                   </div>
-                  <div className="font-mono text-xs text-gray-600">
+                  <div className="font-mono text-xs text-gray-600 mt-1">
                     {testimonial.role}
                   </div>
+                </div>
+                <div className="absolute top-4 right-4 w-8 h-8 bg-black/5 rounded-sm flex items-center justify-center">
+                  <BuildingOfficeIcon className="w-4 h-4 text-black" />
                 </div>
               </motion.div>
             ))}
@@ -347,8 +363,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-20 px-4 bg-black text-white relative overflow-hidden">
+      {/* Enhanced CTA */}
+      <section className="py-32 px-4 bg-black text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.2)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] opacity-20" />
         <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-800" />
         
@@ -357,90 +373,97 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
+            className="max-w-3xl mx-auto"
           >
-            <h2 className="font-mono text-3xl font-bold mb-6">
+            <div className="w-16 h-1 bg-white mx-auto mb-8" />
+            <h2 className="font-mono text-4xl font-bold mb-6">
               PRONTO A MIGLIORARE LA TUA PRESENZA ONLINE?
             </h2>
-            <p className="font-mono text-gray-400 mb-8 max-w-2xl mx-auto">
+            <p className="font-mono text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
               Unisciti alle aziende che già utilizzano Orion per gestire la loro reputazione online in modo efficiente.
             </p>
-            <Link
-              href="/auth/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-mono text-sm hover:bg-black hover:text-white border border-white transition-colors group rounded-sm"
-            >
-              INIZIA LA PROVA GRATUITA
-              <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <div className="flex items-center justify-center gap-8">
+              <Link
+                href="/auth/signup"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-mono text-sm hover:bg-black hover:text-white border-2 border-white transition-all duration-300 group rounded-sm hover:shadow-[5px_5px_0px_0px_rgba(255,255,255,0.2)] transform hover:-translate-y-0.5"
+              >
+                INIZIA LA PROVA GRATUITA
+                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <span className="font-mono text-sm text-gray-500">
+                Nessuna carta di credito richiesta
+              </span>
+            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-12 px-4 border-t border-black/5">
+      {/* Enhanced Footer */}
+      <footer className="py-20 px-4 border-t border-black/10 bg-white/80 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
             <div>
-              <h4 className="font-mono text-sm font-bold mb-4">PRODOTTO</h4>
-              <ul className="space-y-2">
+              <h4 className="font-mono text-sm font-bold mb-6">PRODOTTO</h4>
+              <ul className="space-y-4">
                 <li>
-                  <Link href="/features" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <Link href="/features" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     Caratteristiche
                   </Link>
                 </li>
                 <li>
-                  <Link href="/pricing" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <Link href="/pricing" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     Prezzi
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-mono text-sm font-bold mb-4">RISORSE</h4>
-              <ul className="space-y-2">
+              <h4 className="font-mono text-sm font-bold mb-6">RISORSE</h4>
+              <ul className="space-y-4">
                 <li>
-                  <Link href="/docs" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <Link href="/docs" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     Documentazione
                   </Link>
                 </li>
                 <li>
-                  <Link href="/api" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <Link href="/api" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     API
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-mono text-sm font-bold mb-4">LEGALE</h4>
-              <ul className="space-y-2">
+              <h4 className="font-mono text-sm font-bold mb-6">LEGALE</h4>
+              <ul className="space-y-4">
                 <li>
-                  <Link href="/privacy" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <Link href="/privacy" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     Privacy
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <Link href="/terms" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     Termini
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 className="font-mono text-sm font-bold mb-4">SOCIAL</h4>
-              <ul className="space-y-2">
+              <h4 className="font-mono text-sm font-bold mb-6">SOCIAL</h4>
+              <ul className="space-y-4">
                 <li>
-                  <a href="#" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <a href="#" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     Twitter
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="font-mono text-sm text-gray-700 hover:text-black">
+                  <a href="#" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
                     LinkedIn
                   </a>
                 </li>
               </ul>
             </div>
           </div>
-          <div className="mt-12 pt-8 border-t border-black/5">
+          <div className="mt-20 pt-8 border-t border-black/10">
             <p className="font-mono text-sm text-gray-700">
               © 2024 Orion. Tutti i diritti riservati.
             </p>

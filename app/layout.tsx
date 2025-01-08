@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Space_Mono, DM_Sans } from "next/font/google";
 import { AuthProvider } from "./AuthProvider";
 import "./globals.css";
@@ -21,7 +21,12 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "Orion - Gestione Recensioni",
   description: "Aggrega, analizza e rispondi alle tue recensioni Google in modo automatico.",
-  viewport: "width=device-width, initial-scale=1",
+};
+
+// Viewport configuration
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
   themeColor: "#000000",
 };
 

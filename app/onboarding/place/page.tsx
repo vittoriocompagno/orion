@@ -1,6 +1,5 @@
 'use client'
 
-import { createClient } from '@/utils/supabase/client'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -31,22 +30,8 @@ export default function PlaceSelectionStep() {
       setError(null)
       setLoading(true)
 
-      const supabase = createClient()
-      const placeId = formData.get('placeId') as string
-
-      // Get current user
-      const { data: { user }, error: userError } = await supabase.auth.getUser()
-      if (userError) throw userError
-      if (!user) throw new Error('User not found')
-
-      // Update profile
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({ place_id: placeId })
-        .eq('id', user.id)
-
-      if (updateError) throw updateError
-
+      // Simplified to just navigate to next step
+      // Remove all Supabase interactions
       router.push('/onboarding/preferences')
     } catch (error) {
       setError('Si è verificato un errore durante il salvataggio.')

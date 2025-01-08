@@ -1,11 +1,7 @@
 'use client';
 
-import { useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
-import { Sidebar } from '@/app/components/dashboard/Sidebar'
-import { Header } from '@/app/components/dashboard/Header'
-import { DashboardLayoutProps } from '@/app/types/dashboard'
+import { Sidebar, Header } from '@/components/shared';
+
 
 const mockStats = {
   averageRating: 4.8,
@@ -13,29 +9,7 @@ const mockStats = {
   positiveSentiment: 92,
 }
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
-  const router = useRouter()
-  const supabase = createClientComponentClient()
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        router.replace('/auth/login')
-      }
-    }
-
-    checkAuth()
-  }, [router, supabase.auth])
-
-  const handleNewResponse = () => {
-    // Implement new response logic
-  }
-
-  const handleNotificationsClick = () => {
-    // Implement notifications logic
-  }
-
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#f5f5f5] flex">
       <Sidebar />
@@ -43,8 +17,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="flex-1 flex flex-col min-h-screen">
         <Header 
           stats={mockStats}
-          onNewResponse={handleNewResponse}
-          onNotificationsClick={handleNotificationsClick}
           hasNotifications={true}
         />
 

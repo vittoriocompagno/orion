@@ -1,8 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
 const steps = [
@@ -17,21 +15,8 @@ export default function OnboardingLayout({
 }: {
   children: React.ReactNode
 }) {
-  const router = useRouter()
   const pathname = usePathname()
-  const supabase = createClientComponentClient()
   const currentStepIndex = steps.findIndex(step => step.path === pathname)
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        router.replace('/auth/login')
-      }
-    }
-
-    checkAuth()
-  }, [router, supabase.auth])
 
   return (
     <div className="min-h-screen bg-[#f5f5f5]">

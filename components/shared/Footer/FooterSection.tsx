@@ -9,7 +9,7 @@ import {
   FileCode2
 } from 'lucide-react';
 
-export default function FooterSection() {
+export default function Footer() {
   const currentYear = new Date().getFullYear();
   
   return (

@@ -1,9 +1,8 @@
 'use client'
 
-import { createClient } from '@/utils/supabase/client'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowRightIcon } from '@heroicons/react/24/outline'
 
@@ -15,90 +14,16 @@ export default function OnboardingPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
 
-  // Check if user is logged in and hasn't completed onboarding
-  useEffect(() => {
-    async function checkUser() {
-      const supabase = createClient()
-      const { data: { user }, error: userError } = await supabase.auth.getUser()
-      
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
-
-      // Check if user has already completed onboarding
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('onboarding_completed')
-        .eq('id', user.id)
-        .single()
-
-      if (profile?.onboarding_completed) {
-        router.push('/dashboard')
-      }
-
-      console.log('Profile fetched:', profile);
-    }
-
-    checkUser()
-  }, [router])
-
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     try {
       setLoading(true)
       setError(null)
-      const supabase = createClient()
       
-      // Get the current user
-      const { data: { user }, error: userError } = await supabase.auth.getUser()
-      if (userError) throw userError
-      if (!user) {
-        router.push('/auth/login')
-        return
-      }
-
-      // Update user metadata
-      const { error: updateError } = await supabase.auth.updateUser({
-        data: {
-          first_name: firstName,
-          last_name: lastName,
-          company_name: companyName,
-          onboarding_completed: true,
-        }
-      })
-      if (updateError) throw updateError
-
-      // Update profile in the database
-      const { error: profileError } = await supabase
-        .from('profiles')
-        .upsert({
-          id: user.id,
-          first_name: firstName,
-          last_name: lastName,
-          company_name: companyName,
-          onboarding_completed: true,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'id' })
-      if (profileError) throw profileError
-
-      // Create or update business profile
-      const { error: businessError } = await supabase
-        .from('business_profiles')
-        .upsert({
-          user_id: user.id,
-          name: companyName,
-          updated_at: new Date().toISOString(),
-        }, { 
-          onConflict: 'user_id',
-          ignoreDuplicates: false 
-        })
-      if (businessError) throw businessError
-
-      // Redirect to dashboard
-      router.push('/dashboard')
-    } catch (error: any) {
-      setError(error.message)
+      // For now, just redirect to the next step
+      router.push('/onboarding/business')
+    } catch (err: any) {
+      setError(err.message)
     } finally {
       setLoading(false)
     }
@@ -160,51 +85,15 @@ export default function OnboardingPage() {
           </Link>
         </motion.div>
 
-        <motion.div
+        <motion.form 
+          onSubmit={handleSubmit}
+          className="space-y-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-8 relative"
-        >
-          <h1 className="font-mono text-3xl font-bold mb-3">
-            Completa il tuo profilo
-          </h1>
-          <p className="font-mono text-sm text-gray-600">
-            Inserisci i tuoi dati per iniziare a utilizzare Orion
-          </p>
-        </motion.div>
-
-        <motion.form 
-          onSubmit={handleSubmit} 
-          className="space-y-6 relative"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.4 }}
         >
           <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              {formFields.slice(0, 2).map((field) => (
-                <div key={field.id}>
-                  <label 
-                    htmlFor={field.id}
-                    className="block font-mono text-sm text-gray-700 mb-2"
-                  >
-                    {field.label}
-                  </label>
-                  <input
-                    id={field.id}
-                    type={field.type}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    required={field.required}
-                    placeholder={field.placeholder}
-                    className="w-full px-4 py-3 bg-white font-mono text-sm border border-gray-200 rounded-sm focus:border-black focus:outline-none transition-colors"
-                  />
-                </div>
-              ))}
-            </div>
-
-            {formFields.slice(2).map((field) => (
+            {formFields.map((field) => (
               <div key={field.id}>
                 <label 
                   htmlFor={field.id}

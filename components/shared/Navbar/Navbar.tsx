@@ -7,8 +7,8 @@ import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
 // Import components from same directory level
-import MobileMenu from '../MobileMenu';
-import { UserMenu } from '../UserMenu';
+import MobileMenu from '../Menu/MobileMenu';
+import { UserMenu } from '../Menu/UserMenu';
 
 // Constants
 const NAV_ITEMS = [

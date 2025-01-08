@@ -3,12 +3,10 @@
 import { useState, useEffect } from 'react'
 import { QrCode, Copy, Upload } from 'lucide-react'
 import QRCode from 'qrcode'
-import { Database } from '@/lib/database.types'
 import { User } from '@supabase/supabase-js'
-import { createClient } from '@/utils/supabase/client'
 
 interface LinkGeneratorFormProps {
-  user: User
+  user?: User
 }
 
 export default function LinkGeneratorForm({ user }: LinkGeneratorFormProps) {
@@ -21,8 +19,6 @@ export default function LinkGeneratorForm({ user }: LinkGeneratorFormProps) {
   const [businessName, setBusinessName] = useState('')
   const [description, setDescription] = useState('')
   const [googleReviewUrl, setGoogleReviewUrl] = useState('')
-
-  const supabase = createClient()
 
   // Generate the review link based on custom link
   const reviewLink = `https://orion.reviews/r/${customLink || 'your-business'}`
@@ -81,20 +77,6 @@ export default function LinkGeneratorForm({ user }: LinkGeneratorFormProps) {
     try {
       setLoading(true)
       setError(null)
-
-      // In production, we would:
-      // 1. Upload the logo to storage
-      // 2. Create the business profile
-      // const { error: profileError } = await supabase
-      //   .from('business_profiles')
-      //   .insert({
-      //     user_id: user.id,
-      //     name: businessName,
-      //     slug: customLink,
-      //     description,
-      //     logo_url: logoUrl,
-      //     google_review_url: googleReviewUrl
-      //   })
 
       // For now, just show success message
       alert('Link generato con successo!')

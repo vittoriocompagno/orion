@@ -1,6 +1,6 @@
 'use client';
 
-import CountingNumber from '@/components/CountingNumber';
+import { CountingNumber } from '@/components/shared/Features';
 
 const stats = [
   { number: "50K+", label: "RECENSIONI GESTITE" },

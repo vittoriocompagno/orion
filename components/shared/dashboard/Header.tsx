@@ -6,15 +6,13 @@ interface Stats {
 
 interface HeaderProps {
   stats: Stats;
-  onNewResponse: () => void;
-  onNotificationsClick: () => void;
+
   hasNotifications?: boolean;
 }
 
 export function Header({ 
   stats, 
-  onNewResponse, 
-  onNotificationsClick,
+
   hasNotifications = false 
 }: HeaderProps) {
   return (
@@ -29,18 +27,11 @@ export function Header({
       <div className="flex items-center gap-4">
         <button 
           className="font-mono text-sm text-gray-700 hover:text-black transition-colors relative"
-          onClick={onNotificationsClick}
         >
           NOTIFICHE
           {hasNotifications && (
             <span className="absolute -top-1 -right-1 w-2 h-2 bg-accent rounded-full" />
           )}
-        </button>
-        <button 
-          className="font-mono text-sm px-4 py-2 bg-black text-white border border-gray-700 hover:translate-y-[-2px] transition-transform"
-          onClick={onNewResponse}
-        >
-          NUOVA RISPOSTA
         </button>
       </div>
     </header>

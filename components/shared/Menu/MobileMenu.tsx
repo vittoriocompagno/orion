@@ -1,6 +1,6 @@
 'use client';
 
-import { ChevronRight, X, LayoutDashboard } from 'lucide-react';
+import { ChevronRight, X, LayoutDashboard, LogIn } from 'lucide-react';
 import Link from 'next/link';
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { UserMenu } from './UserMenu';
@@ -100,9 +100,11 @@ export default function MobileMenu({ isOpen, onClose, user }: MobileMenuProps) {
               </div>
             ) : (
               <LoginLink 
-                className="block w-full font-mono px-6 py-4 text-xl shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform border-2 bg-black-gradient text-white border-gray-900 text-center"
+                className="block w-full font-mono px-6 py-4 text-xl shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform border-2 bg-black-gradient text-white border-gray-900 text-center flex items-center justify-center gap-2"
               >
-                ACCEDI →
+                <LogIn size={24} />
+                ACCEDI
+                <ChevronRight size={24} />
               </LoginLink>
             )}
           </div>

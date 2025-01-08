@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 const BUSINESS_TYPES = [
   { id: 'restaurant', label: 'RISTORANTE' },
@@ -14,33 +13,16 @@ const BUSINESS_TYPES = [
 
 export default function BusinessType() {
   const router = useRouter()
-  const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [selectedType, setSelectedType] = useState<string>('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setError(null)
     setLoading(true)
 
     try {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) throw new Error('No user found')
-
-      const { error: updateError } = await supabase
-        .from('profiles')
-        .update({
-          business_type: selectedType,
-          updated_at: new Date().toISOString()
-        })
-        .eq('id', user.id)
-
-      if (updateError) throw updateError
-
+      // Simply navigate to the next page
       router.push('/onboarding/place')
-    } catch (err: any) {
-      setError(err.message)
     } finally {
       setLoading(false)
     }
@@ -76,12 +58,6 @@ export default function BusinessType() {
             </label>
           ))}
         </div>
-
-        {error && (
-          <div className="text-red-600 text-sm">
-            {error}
-          </div>
-        )}
 
         <button
           type="submit"

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Star, TrendingUp, Loader2, X } from 'lucide-react'
+import { Search, Star, TrendingUp, Loader2, X, User } from 'lucide-react'
 
 interface GoogleReview {
   author_name: string
@@ -167,13 +167,9 @@ export function SearchBar() {
                   className="p-6 border-b border-black/10 hover:bg-black/[0.02] transition-colors rounded-[32px]"
                 >
                   <div className="flex items-start gap-4">
-                    {review.profile_photo_url && (
-                      <img 
-                        src={review.profile_photo_url} 
-                        alt={review.author_name}
-                        className="w-10 h-10 rounded-full"
-                      />
-                    )}
+                    <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                      <User className="w-6 h-6 text-gray-400" />
+                    </div>
                     <div className="flex-1">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-mono font-bold">{review.author_name}</span>

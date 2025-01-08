@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Search, Star, TrendingUp, Loader2 } from 'lucide-react'
+import { Search, Star, TrendingUp, Loader2, X } from 'lucide-react'
 
 interface GoogleReview {
   author_name: string
@@ -100,7 +100,15 @@ export function SearchBar() {
           placeholder="Cerca la tua attività per vedere le recensioni..."
           className="w-full px-6 py-4 bg-white/50 backdrop-blur-sm rounded-full border border-black font-mono text-lg placeholder:text-gray-400 focus:outline-none focus:border-black focus:ring-1 focus:ring-black/5 transition-all duration-200"
         />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 p-2">
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+          {query && (
+            <button
+              onClick={() => setQuery('')}
+              className="p-2 hover:text-black text-gray-400 transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          )}
           {isSearching ? (
             <motion.div 
               animate={{ rotate: 360 }}
@@ -121,7 +129,7 @@ export function SearchBar() {
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: 10, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full  left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl rounded-[32px] border border-black overflow-hidden"
+            className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl rounded-[32px] border border-black overflow-hidden"
           >
             {/* Place Details */}
             <div className="p-6 border-b border-black/10 rounded-full">
@@ -198,7 +206,7 @@ export function SearchBar() {
                 animate={{ opacity: 1, y: 0, height: 'auto' }}
                 exit={{ opacity: 0, y: 10, height: 0 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl rounded-full border border-black overflow-hidden"
+                className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl border border-black overflow-hidden rounded-[32px]"
               >
                 {places.map((place, index) => (
                   <motion.div
@@ -207,7 +215,7 @@ export function SearchBar() {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: index * 0.05 }}
                     onClick={() => setSelectedPlace(place)}
-                    className="p-6 hover:bg-black/[0.02] transition-colors cursor-pointer rounded-full"
+                    className="p-6 hover:bg-black/[0.02] transition-colors cursor-pointer rounded-[32px]"
                   >
                     <div className="flex items-start justify-between">
                       <div>

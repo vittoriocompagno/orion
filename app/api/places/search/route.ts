@@ -23,18 +23,45 @@ function checkRateLimit(ip: string): boolean {
   return true
 }
 
+// CORS headers configuration
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+}
+
+// OPTIONS handler for CORS preflight requests
+export async function OPTIONS() {
+  return NextResponse.json({}, { headers: corsHeaders })
+}
+
 export async function GET(request: Request) {
   try {
+    // Validate API key exists
+    if (!process.env.GOOGLE_PLACES_API_KEY) {
+      console.error('Google Places API key is not configured')
+      return NextResponse.json(
+        { error: 'API configuration error' },
+        { 
+          status: 500,
+          headers: corsHeaders
+        }
+      )
+    }
+
     // Get client IP for rate limiting
     const headersList = await headers()
-    const forwardedFor= headersList.get('x-forwarded-for')
+    const forwardedFor = headersList.get('x-forwarded-for')
     const ip = forwardedFor ? forwardedFor.split(',')[0] : 'unknown'
     
     // Check rate limit
     if (!checkRateLimit(ip)) {
       return NextResponse.json(
         { error: 'Rate limit exceeded' },
-        { status: 429 }
+        { 
+          status: 429,
+          headers: corsHeaders
+        }
       )
     }
 
@@ -45,7 +72,10 @@ export async function GET(request: Request) {
     if (!query) {
       return NextResponse.json(
         { error: 'Query parameter is required' },
-        { status: 400 }
+        { 
+          status: 400,
+          headers: corsHeaders
+        }
       )
     }
 
@@ -55,7 +85,12 @@ export async function GET(request: Request) {
     const searchData = await searchResponse.json()
 
     if (!searchResponse.ok) {
-      throw new Error('Failed to fetch from Google Places API')
+      console.error('Google Places API Error:', {
+        status: searchResponse.status,
+        statusText: searchResponse.statusText,
+        data: searchData
+      })
+      throw new Error(`Failed to fetch from Google Places API: ${searchData.error_message || searchResponse.statusText}`)
     }
 
     // Process each place to get details including reviews
@@ -66,7 +101,12 @@ export async function GET(request: Request) {
         const detailsData = await detailsResponse.json()
 
         if (!detailsResponse.ok) {
-          throw new Error('Failed to fetch place details')
+          console.error('Google Places Details API Error:', {
+            status: detailsResponse.status,
+            statusText: detailsResponse.statusText,
+            data: detailsData
+          })
+          throw new Error(`Failed to fetch place details: ${detailsData.error_message || detailsResponse.statusText}`)
         }
 
         return {
@@ -80,12 +120,18 @@ export async function GET(request: Request) {
       })
     )
 
-    return NextResponse.json({ places })
-  } catch (error) {
-    console.error('Places API Error:', error)
     return NextResponse.json(
-      { error: 'Failed to fetch places' },
-      { status: 500 }
+      { places },
+      { headers: corsHeaders }
+    )
+  } catch (error) {
+    console.error('Places API Error:', error instanceof Error ? error.message : 'Unknown error')
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Failed to fetch places' },
+      { 
+        status: 500,
+        headers: corsHeaders
+      }
     )
   }
 } 

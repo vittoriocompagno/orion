@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 interface CountingNumberProps {
@@ -14,53 +14,43 @@ export default function CountingNumber({ value, className }: CountingNumberProps
   const hasAnimated = useRef(false);
 
   useEffect(() => {
-    if (inView && !hasAnimated.current) {
-      hasAnimated.current = true;
-      
-      // Handle special cases
-      if (value === '24/7') {
-        setDisplayValue('24/7');
-        return;
-      }
+    if (!inView || hasAnimated.current) return;
+    hasAnimated.current = true;
 
-      // Extract numeric value and suffix
-      const numericMatch = value.match(/^([\d.]+)(.*)$/);
-      if (!numericMatch) {
-        setDisplayValue(value);
-        return;
-      }
+    // Handle non-numeric values (e.g., "24/7")
+    if (!/^\d/.test(value)) {
+      setDisplayValue(value);
+      return;
+    }
 
-      const targetNum = parseFloat(numericMatch[1]);
-      const suffix = numericMatch[2] || '';
-      const duration = 3000; // 3 seconds
+    // Parse numeric value and suffix
+    const [, number = '0', suffix = ''] = value.match(/^([\d.]+)(.*)$/) || [];
+    const targetNum = parseFloat(number);
+    
+    const animate = () => {
       const steps = 100;
-      const increment = targetNum / steps;
-      let current = 0;
+      const duration = 3000;
       let frame = 0;
 
-      const easeOutQuart = (x: number): number => {
-        return 1 - Math.pow(1 - x, 4);
-      };
-
-      const animate = () => {
-        if (frame < steps) {
-          const progress = easeOutQuart(frame / steps);
-          current = targetNum * progress;
-          setDisplayValue(`${Math.round(current * 10) / 10}${suffix}`);
-          frame++;
-          requestAnimationFrame(animate);
-        } else {
+      const step = () => {
+        if (frame >= steps) {
           setDisplayValue(value);
+          return;
         }
+
+        const progress = 1 - Math.pow(1 - frame / steps, 4); // easeOutQuart
+        const current = targetNum * progress;
+        setDisplayValue(`${(Math.round(current * 10) / 10)}${suffix}`);
+        
+        frame++;
+        requestAnimationFrame(step);
       };
 
-      requestAnimationFrame(animate);
-    }
+      requestAnimationFrame(step);
+    };
+
+    animate();
   }, [inView, value]);
 
-  return (
-    <span ref={ref} className={className}>
-      {displayValue}
-    </span>
-  );
+  return <span ref={ref} className={className}>{displayValue}</span>;
 } 

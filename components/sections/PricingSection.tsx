@@ -1,16 +1,25 @@
 'use client';
 
-import { Check, ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
+import {PricingCard} from '@/components/sections/PricingCard';
 
-const ANNUAL_DISCOUNT = 0.20; // 20% discount for annual plans
+interface PricingPlan {
+  name: string;
+  monthlyPrice: number | null;
+  features: string[];
+  isPopular: boolean;
+  ctaText: string;
+}
 
-const plans = [
+const ANNUAL_DISCOUNT = 0.20;
+
+const plans: PricingPlan[] = [
   {
     name: "BASE",
-    monthlyPrice: 29,
+    monthlyPrice: 9,
     features: [
-      "100 recensioni/mese",
+      "50 recensioni/mese",
       "Analisi base del sentiment",
       "Risposte automatiche"
     ],
@@ -19,9 +28,9 @@ const plans = [
   },
   {
     name: "PRO",
-    monthlyPrice: 79,
+    monthlyPrice: 29,
     features: [
-      "500 recensioni/mese",
+      "200 recensioni/mese",
       "Analisi avanzata del sentiment",
       "Risposte personalizzate AI",
       "Dashboard analytics"
@@ -55,23 +64,6 @@ export default function PricingSection() {
     setCurrentIndex((prev) => (prev - 1 + plans.length) % plans.length);
   };
 
-  const formatPrice = (monthlyPrice: number | null) => {
-    if (monthlyPrice === null) return "Custom";
-    const price = isAnnual 
-      ? monthlyPrice * (1 - ANNUAL_DISCOUNT)
-      : monthlyPrice;
-    return `€${Math.round(price)}`;
-  };
-
-  const getPeriodLabel = () => {
-    return isAnnual ? "/mese (fatturato annualmente)" : "/mese";
-  };
-
-  const getAnnualSavings = (monthlyPrice: number) => {
-    const savings = monthlyPrice * 12 * ANNUAL_DISCOUNT;
-    return `Risparmi €${Math.round(savings)}/anno`;
-  };
-
   return (
     <section className="px-6 md:px-4 py-24 md:py-20 bg-surface border-b-4 border-gray-900">
       <div className="section-container">
@@ -101,94 +93,13 @@ export default function PricingSection() {
         {/* Desktop Grid */}
         <div className="hidden md:grid md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
-            <div 
-              key={index} 
-              className={`border-2 p-8 shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform ${
-                plan.isPopular 
-                  ? 'transform scale-105 bg-black-gradient text-white' 
-                  : 'bg-white'
-              } border-gray-900`}
-            >
-              {plan.isPopular && (
-                <div className="font-mono text-sm px-3 py-1 mb-4 inline-block shadow-brutal-white bg-white text-accent">
-                  POPOLARE
-                </div>
-              )}
-              <h3 className="font-mono text-2xl mb-4">{plan.name}</h3>
-              <div className="text-4xl font-mono mb-2">
-                {formatPrice(plan.monthlyPrice)}
-                <span className={`text-xl ${plan.isPopular ? 'opacity-75' : 'text-gray-700'}`}>
-                  {plan.monthlyPrice && getPeriodLabel()}
-                </span>
-              </div>
-              {isAnnual && plan.monthlyPrice && (
-                <div className="font-mono text-sm text-accent mb-6">
-                  {getAnnualSavings(plan.monthlyPrice)}
-                </div>
-              )}
-              <ul className={`font-sans space-y-4 mb-8 ${plan.isPopular ? '' : 'text-gray-700'}`}>
-                {plan.features.map((feature, i) => (
-                  <li key={i} className="flex items-center gap-2">
-                    <Check size={18} className={plan.isPopular ? 'text-white' : 'text-accent'} />
-                    {feature}
-                  </li>
-                ))}
-              </ul>
-              <button className={`w-full font-mono px-6 py-3 flex items-center justify-center gap-2 shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform border-2 ${
-                plan.isPopular 
-                  ? 'bg-white text-accent border-white shadow-brutal-white' 
-                  : 'bg-white text-gray-900 border-gray-900'
-              }`}>
-                {plan.ctaText}
-                <ChevronRight size={18} />
-              </button>
-            </div>
+            <PricingCard key={index} plan={plan} isAnnual={isAnnual} />
           ))}
         </div>
 
         {/* Mobile Carousel */}
         <div className="md:hidden">
-          <div 
-            className={`border-2 p-8 shadow-brutal transition-all duration-300 ${
-              plans[currentIndex].isPopular 
-                ? 'bg-black-gradient text-white' 
-                : 'bg-white'
-            } border-gray-900`}
-          >
-            {plans[currentIndex].isPopular && (
-              <div className="font-mono text-sm px-3 py-1 mb-4 inline-block shadow-brutal-white bg-white text-accent">
-                POPOLARE
-              </div>
-            )}
-            <h3 className="font-mono text-2xl mb-4">{plans[currentIndex].name}</h3>
-            <div className="text-4xl font-mono mb-2">
-              {formatPrice(plans[currentIndex].monthlyPrice)}
-              <span className={`text-xl ${plans[currentIndex].isPopular ? 'opacity-75' : 'text-gray-700'}`}>
-                {plans[currentIndex].monthlyPrice && getPeriodLabel()}
-              </span>
-            </div>
-            {isAnnual && plans[currentIndex].monthlyPrice && (
-              <div className="font-mono text-sm text-accent mb-6">
-                {getAnnualSavings(plans[currentIndex].monthlyPrice)}
-              </div>
-            )}
-            <ul className={`font-sans space-y-4 mb-8 ${plans[currentIndex].isPopular ? '' : 'text-gray-700'}`}>
-              {plans[currentIndex].features.map((feature, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <Check size={18} className={plans[currentIndex].isPopular ? 'text-white' : 'text-accent'} />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-            <button className={`w-full font-mono px-6 py-3 flex items-center justify-center gap-2 shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform border-2 ${
-              plans[currentIndex].isPopular 
-                ? 'bg-white text-accent border-white shadow-brutal-white' 
-                : 'bg-white text-gray-900 border-gray-900'
-            }`}>
-              {plans[currentIndex].ctaText}
-              <ChevronRight size={18} />
-            </button>
-          </div>
+          <PricingCard plan={plans[currentIndex]} isAnnual={isAnnual} />
 
           {/* Mobile Navigation */}
           <div className="flex justify-between items-center mt-8">

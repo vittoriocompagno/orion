@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { MAIN_NAVIGATION, SOURCE_NAVIGATION } from '@/app/config/navigation';
-import { createClient } from '@/app/utils/supabase/client';
 import { useState } from 'react';
 import { LogOut } from 'lucide-react';
 

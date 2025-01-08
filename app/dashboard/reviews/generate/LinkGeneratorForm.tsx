@@ -3,9 +3,9 @@
 import { useState, useEffect } from 'react'
 import { QrCode, Copy, Upload } from 'lucide-react'
 import QRCode from 'qrcode'
-import { Database } from '@/app/lib/database.types'
+import { Database } from '@/lib/database.types'
 import { User } from '@supabase/supabase-js'
-import { createClient } from '@/app/utils/supabase/client'
+import { createClient } from '@/utils/supabase/client'
 
 interface LinkGeneratorFormProps {
   user: User

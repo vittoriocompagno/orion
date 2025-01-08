@@ -3,51 +3,41 @@
 import { useState, useEffect } from 'react';
 import { Menu, LogIn, ChevronRight, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
-import MobileMenu from '../MobileMenu';
-import UserMenu from '../UserMenu';
-import { createClient } from '@/app/utils/supabase/client';
-import { User } from '@supabase/supabase-js';
+import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 
-export default function Navbar() {
+// Import components from same directory level
+import MobileMenu from '../MobileMenu';
+import { UserMenu } from '../UserMenu';
+
+// Constants
+const NAV_ITEMS = [
+  { href: '#features', label: 'FEATURES' },
+  { href: '#roadmap', label: 'ROADMAP' },
+  { href: '#pricing', label: 'PREZZI' },
+] as const;
+
+export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const { user, isAuthenticated, isLoading } = useKindeBrowserClient();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const supabase = createClient();
-
-    // Check current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-    });
-
-    // Listen for auth changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
-
-    return () => subscription.unsubscribe();
   }, []);
 
   const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const href = e.currentTarget.getAttribute('href');
-    if (href?.startsWith('#')) {
-      const element = document.querySelector(href);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    if (!href?.startsWith('#')) return;
+    
+    const element = document.querySelector(href);
+    element?.scrollIntoView({ behavior: 'smooth' });
   };
+
+  if (isLoading) return null;
 
   return (
     <>
@@ -56,15 +46,26 @@ export default function Navbar() {
       }`}>
         <div className="section-container h-full">
           <div className="flex justify-between items-center h-full">
-            <a href="/" className="font-mono text-2xl font-bold hover:text-accent transition-colors duration-100">
+            <Link 
+              href="/" 
+              className="font-mono text-2xl font-bold hover:text-accent transition-colors duration-100"
+            >
               ORION_
-            </a>
+            </Link>
             
             <div className="hidden md:flex items-center gap-8">
-              <a href="#features" onClick={scrollToSection} className="font-mono hover:text-accent transition-colors duration-100">FEATURES</a>
-              <a href="#roadmap" onClick={scrollToSection} className="font-mono hover:text-accent transition-colors duration-100">ROADMAP</a>
-              <a href="#pricing" onClick={scrollToSection} className="font-mono hover:text-accent transition-colors duration-100">PREZZI</a>
-              {user ? (
+              {NAV_ITEMS.map(({ href, label }) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={scrollToSection}
+                  className="font-mono hover:text-accent transition-colors duration-100"
+                >
+                  {label}
+                </a>
+              ))}
+
+              {isAuthenticated ? (
                 <>
                   <Link 
                     href="/dashboard"
@@ -76,20 +77,18 @@ export default function Navbar() {
                   <UserMenu user={user} />
                 </>
               ) : (
-                <Link 
-                  href="/auth/login"
-                  className="font-mono px-4 py-2 shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all duration-100 border-2 bg-black-gradient text-white border-gray-900 flex items-center gap-2"
-                >
+                <LoginLink className="font-mono px-4 py-2 shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all duration-100 border-2 bg-black-gradient text-white border-gray-900 flex items-center gap-2">
                   <LogIn size={18} />
                   ACCEDI
                   <ChevronRight size={18} />
-                </Link>
+                </LoginLink>
               )}
             </div>
 
             <button 
               onClick={() => setIsMobileMenuOpen(true)}
               className="md:hidden font-mono hover:text-accent transition-colors duration-100"
+              aria-label="Open menu"
             >
               <Menu size={24} />
             </button>

@@ -357,10 +357,7 @@ Durante la generazione del codice, l'IA dovrà:
 - Use TypeScript for better type safety with database operations
 
 ### 10.5. Authentication Flow
-- Implement auth callback handling at `/auth/callback/route.ts`
-- Use middleware for protected routes
-- Handle auth state changes appropriately
-- Implement proper error handling for auth operations
+Use Kinde for authentication
 
 ### 10.6. Data Fetching
 - Use Server Components for initial data fetching when possible
@@ -380,20 +377,6 @@ Durante la generazione del codice, l'IA dovrà:
 - Use connection pooling in production
 - Optimize database queries
 
-### 10.9. Directory Structure
-```
-app/
-  ├── auth/
-  │   └── callback/
-  │       └── route.ts
-  ├── utils/
-  │   └── supabase/
-  │       ├── client.ts
-  │       └── server.ts
-  └── components/
-      └── auth/
-          └── AuthButton.tsx
-```
 
 ### 10.10. Testing
 - Test auth flows

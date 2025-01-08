@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, Star, TrendingUp, Loader2, X, User } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
 interface GoogleReview {
   author_name: string
@@ -23,6 +24,7 @@ interface PlaceDetails {
 }
 
 export function SearchBar() {
+  const router = useRouter()
   const [query, setQuery] = useState('')
   const [isSearching, setIsSearching] = useState(false)
   const [places, setPlaces] = useState<PlaceDetails[]>([])
@@ -85,7 +87,7 @@ export function SearchBar() {
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto relative z-50">
+    <div className="w-full max-w-3xl mx-auto relative z-[100]">
       <motion.div
         variants={containerVariants}
         animate={searchFocused ? "focused" : "unfocused"}
@@ -129,7 +131,7 @@ export function SearchBar() {
             animate={{ opacity: 1, y: 0, height: 'auto' }}
             exit={{ opacity: 0, y: 10, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl rounded-[32px] border border-black overflow-hidden"
+            className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl rounded-[32px] border border-black overflow-hidden z-[200]"
           >
             {/* Place Details */}
             <div className="p-6 border-b border-black/10 rounded-full">
@@ -188,7 +190,10 @@ export function SearchBar() {
             </div>
 
             <div className="p-4 bg-white/60 backdrop-blur-sm border-t border-black/10">
-              <button className="w-full font-mono text-sm bg-black text-white px-6 py-3 rounded-full hover:bg-black/90 transition-colors flex items-center justify-center gap-2">
+              <button 
+                onClick={() => router.push('/register')}
+                className="w-full font-mono text-sm bg-black text-white px-6 py-3 rounded-full hover:bg-black/90 transition-colors flex items-center justify-center gap-2"
+              >
                 <span>Monitora e gestisci le tue recensioni con Orion</span>
                 <TrendingUp className="w-4 h-4" />
               </button>
@@ -202,7 +207,7 @@ export function SearchBar() {
                 animate={{ opacity: 1, y: 0, height: 'auto' }}
                 exit={{ opacity: 0, y: 10, height: 0 }}
                 transition={{ duration: 0.2 }}
-                className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl border border-black overflow-hidden rounded-[32px]"
+                className="absolute top-full left-0 right-0 mt-2 bg-white/60 backdrop-blur-xl border border-black overflow-hidden rounded-[32px] z-[200]"
               >
                 {places.map((place, index) => (
                   <motion.div

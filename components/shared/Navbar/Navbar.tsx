@@ -5,6 +5,7 @@ import { Menu, LogIn, ChevronRight, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 import { LoginLink } from "@kinde-oss/kinde-auth-nextjs/components";
 import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
+import Image from 'next/image';
 
 // Import components from same directory level
 import MobileMenu from '../Menu/MobileMenu';
@@ -52,7 +53,7 @@ export function Navbar() {
             >
               ORION_
             </Link>
-            
+
             <div className="hidden md:flex items-center gap-8">
               {NAV_ITEMS.map(({ href, label }) => (
                 <a
@@ -66,7 +67,7 @@ export function Navbar() {
               ))}
 
               {isAuthenticated ? (
-                <>
+                <div className="flex items-center gap-4">
                   <Link 
                     href="/dashboard"
                     className="font-mono hover:text-accent transition-colors duration-100 flex items-center gap-2"
@@ -74,8 +75,20 @@ export function Navbar() {
                     <LayoutDashboard size={18} />
                     DASHBOARD
                   </Link>
-                  <UserMenu user={user} />
-                </>
+                  {user?.picture ? (
+                    <div className="w-10 h-10 rounded-none border-2 border-black overflow-hidden">
+                      <Image
+                        src={user.picture}
+                        alt={user.given_name || 'User avatar'}
+                        width={40}
+                        height={40}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <UserMenu user={user} />
+                  )}
+                </div>
               ) : (
                 <LoginLink className="font-mono px-4 py-2 shadow-brutal hover:translate-x-0.5 hover:-translate-y-0.5 active:translate-x-0 active:translate-y-0 transition-all duration-100 border-2 bg-black-gradient text-white border-gray-900 flex items-center gap-2">
                   <LogIn size={18} />

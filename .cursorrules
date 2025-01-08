@@ -1,8 +1,6 @@
-Okay, ecco le istruzioni riviste, senza la roadmap e tradotte in inglese:
-
 ## Detailed Instructions for Generating ORION - Review Analysis and Management Platform
 
-This document outlines the requirements for creating ORION, a review analysis and management platform built using Next.js with the App Router, Supabase, and Vercel AI SDK. The application will be developed following TypeScript, React, Shadcn UI, and Tailwind CSS best practices, while maintaining a **brutalist/monospaced** style inspired by *cursor.com* and *awwwards.com*.
+This document outlines the requirements for creating ORION, a review analysis and management platform built using Next.js with the App Router, Supabase, Vercel AI SDK, and Kinde. The application will be developed following TypeScript, React, Shadcn UI, and Tailwind CSS best practices, while maintaining a **"Glassy Brutalism"** style that blends neo-brutalism with modern glass morphism.
 
 ## 1. Technical Specifications
 
@@ -32,7 +30,7 @@ This document outlines the requirements for creating ORION, a review analysis an
 
 ### 2.1. Supabase Authentication
 
-*   Implement authentication using Supabase Auth, following the **cookie-based** pattern.
+*   Implement authentication using Supabase Auth with **Kinde**, following the **cookie-based** pattern.
 *   Use `@supabase/ssr` for server-side management of user sessions.
 *   Create client and server helpers for Supabase client creation:
     *   **Client-side:** Use `createClient` (supabase/client.ts).
@@ -89,28 +87,39 @@ export async function updateSession(request: NextRequest) {
 
 ### 4.1. Aesthetics
 
-*   **Brutalist/Monospaced:** Inspired by *cursor.com* and *awwwards.com*.
-*   **Fonts:**
-    *   `Space Mono` for titles, buttons.
-    *   `DM Sans` for body text.
-*   **Colors:**
-    *   `--bg: #f5f5f5` (light gray).
-    *   `black: #000000`.
-*   **Layout:** Blocks, thin borders, sharp corners.
+*   **"Glassy Brutalism":** Combining neo-brutalism with modern glass morphism.
+*   **Glass Effects:**
+    *   Semi-transparent whites (e.g., `bg-white/50`, `bg-white/70`).
+    *   Backdrop blur effects (e.g., `backdrop-blur-xl`, `backdrop-blur-lg`).
+    *   Subtle shadows (e.g., `shadow-black/[0.03]`).
+    *   Light borders (e.g., `border-black/5`, `border-black/10`).
+
+*   **Rounded Geometry:**
+    *   Pill-shaped containers (e.g., `rounded-full`).
+    *   Large rounded corners for dropdowns (e.g., `rounded-[32px]`).
+    *   Circular avatars.
+    *   Soft edges contrasting with brutalist elements.
+
+*   **Typography:**
+    *   Monospace font family (e.g., `font-mono`).
+    *   Clean hierarchical sizing.
+    *   Muted grays for secondary text (e.g., `text-gray-600`).
+    *   Bold black for emphasis.
+    *   No specific fonts mentioned here, let's use system-default `monospace` family and `sans-serif` for body text unless specified otherwise.
 
 ### 4.2. UI Elements
 
-*   **Cards:** Consistent padding and spacing.
-*   **Sections:** Components with gradient options.
-*   **Buttons:** Pill-shaped with hover gradients.
-*   **Animations:** Fade-in, slide-up, smooth transitions.
-*   **Marquee:** Single-line for showcasing features and integrations.
+*   **Cards:** Consistent padding and spacing, semi-transparent backgrounds with subtle shadows and light borders.
+*   **Sections:** Components with the option of semi-transparent white backgrounds and backdrop blur effects.
+*   **Buttons:** Pill-shaped with subtle hover states (e.g., `hover:bg-black/[0.02]`)
+*   **Animations:** Fade-in, slide-up, smooth transitions (e.g. `transition-colors`, `transition-all`)
+*   **Marquee:** Single-line for showcasing features and integrations using the `font-mono` and subtle glass effects.
 
 ### 4.3. Layout & Structure
 
 *   Navigation: Homepage with hero section, CTA "Try Orion".
 *   Onboarding: Initial configuration (e.g., business name, Google API).
-*   Dashboard: Display of reviews, sentiment, quick replies.
+*   Dashboard: Display of reviews, sentiment, quick replies. Generous padding (e.g., `px-6 py-4`), consistent gaps (e.g., `gap-4`, `gap-8`), and strategic use of borders for separation.
 
 ## 5. Vercel AI SDK Implementation
 
@@ -140,7 +149,7 @@ export async function updateSession(request: NextRequest) {
 
 ### 7.1. Registration and Onboarding
 
-*   Account creation (email/password, optional social login).
+*   Account creation (email/password, optional social login via Kinde).
 *   Preference configuration (e.g., business name, Google API connection).
 
 ### 7.2. Dashboard
@@ -175,7 +184,7 @@ export async function updateSession(request: NextRequest) {
 *   Request any necessary clarifications (e.g., "Do you have the Google API key?").
 *   Suggest options for database and hosting.
 *   Confirm the choices made (e.g., onboarding type).
-*   Ensure the user interface reflects the brutalist/monospaced style.
+*   Ensure the user interface reflects the "Glassy Brutalism" style.
 
 ## 10. Supabase Best Practices
 
@@ -183,11 +192,17 @@ export async function updateSession(request: NextRequest) {
 *   Use environment variables in the `.env.local` file and provide `.env.example`.
 *   Enable RLS for Supabase tables.
 *   Use TypeScript for type safety in database operations.
-*    Use `Kinde` for authentication.
+*   Use `Kinde` for authentication.
 *   Use Server Components for initial data fetching when possible and implement error handling.
 *   Optimize queries and use Next.js caching when needed.
 *   Implement authentication, database, and RLS tests.
 
 **End of Instructions**
 
-This revised document provides a more detailed and structured set of instructions for generating the ORION platform. It outlines technical specifications, core functionalities, visual design guidelines, and best practices to ensure a cohesive and performant application.
+**Key Changes Made:**
+
+*   **Styling Overwrite:** The "Brutalist/Monospaced" style is completely replaced by the "Glassy Brutalism" style guidelines from the initial text.
+*   **Font Specification:** No specific fonts are mentioned in this specific style definition. I will use system default monospace font for code and sans-serif for the body text unless mentioned otherwise.
+*   **UI Elements:** UI Elements such as Cards, Buttons, Sections, Marquee are styled based on the glass morphism concept now.
+
+This revised document now combines the detailed technical and architectural requirements with the unique visual language of "Glassy Brutalism." Let me know if this revised version meets your needs!

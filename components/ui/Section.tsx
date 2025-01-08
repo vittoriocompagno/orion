@@ -6,29 +6,29 @@ import { cn } from '@/lib/utils'
 interface SectionProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode
   variant?: 'default' | 'dark'
-  gridSize?: 'small' | 'large'
   withGradient?: boolean
   gradientPosition?: 'left' | 'right' | 'center'
+  gridSize?: 'small' | 'large'
 }
 
 export function Section({
   children,
   className,
   variant = 'default',
-  gridSize = 'large',
   withGradient = true,
   gradientPosition = 'right',
+  gridSize = 'large',
   ...props
 }: SectionProps) {
-  const baseStyles = "relative overflow-hidden py-32 px-8 md:px-16"
+  const baseStyles = "relative overflow-hidden py-32 px-8"
   const variantStyles = {
-    default: "bg-white",
-    dark: "bg-black text-white"
+    default: "bg-white/70 backdrop-blur-sm",
+    dark: "bg-black/70 backdrop-blur-sm text-white"
   }
 
-  const gridSizeStyles = {
-    small: "bg-[size:20px_20px]",
-    large: "bg-[size:30px_30px]"
+  const gridSizes = {
+    small: "32px",
+    large: "64px"
   }
 
   const gradientPositions = {
@@ -38,27 +38,37 @@ export function Section({
   }
 
   return (
-    <section className={cn(baseStyles, variantStyles[variant], className)} {...props}>
-      {/* Grid Background */}
-      <div className="absolute inset-0">
+    <section 
+      className={cn(
+        baseStyles, 
+        variantStyles[variant],
+        "border-y border-black/5",
+        className
+      )} 
+      {...props}
+    >
+      {/* Background Effects */}
+      <div className="absolute inset-0 -z-10">
+        {/* Grid Pattern */}
         <div 
           className={cn(
-            "absolute inset-0 bg-[linear-gradient(transparent_1px,var(--grid-color)_1px),linear-gradient(90deg,transparent_1px,var(--grid-color)_1px)] [background-position:center_center] border-[1px]",
-            gridSizeStyles[gridSize],
+            "absolute inset-0 bg-[linear-gradient(transparent_1px,var(--grid-color)_1px),linear-gradient(90deg,transparent_1px,var(--grid-color)_1px)] [background-position:center_center]",
             {
-              '[--grid-color:#fff]': variant === 'default',
-              '[--grid-color:#000] opacity-20': variant === 'dark',
-              'opacity-30': variant === 'default'
+              '[--grid-color:rgba(99,102,241,0.04)]': variant === 'default',
+              '[--grid-color:rgba(129,140,248,0.04)]': variant === 'dark',
             }
           )} 
+          style={{ backgroundSize: gridSizes[gridSize] }}
         />
+        
+        {/* Gradient */}
         {withGradient && (
           <div 
             className={cn(
               "absolute inset-0",
               {
-                "bg-[radial-gradient(var(--gradient-shape),rgba(0,0,0,0.03),transparent)]": variant === 'default',
-                "bg-[radial-gradient(var(--gradient-shape),rgba(0,0,0,0.15),transparent)]": variant === 'dark'
+                "bg-[radial-gradient(var(--gradient-shape),rgba(99,102,241,0.02),transparent)]": variant === 'default',
+                "bg-[radial-gradient(var(--gradient-shape),rgba(129,140,248,0.02),transparent)]": variant === 'dark'
               }
             )}
             style={{

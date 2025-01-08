@@ -1,45 +1,67 @@
 'use client'
 
-import { motion, HTMLMotionProps } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
-interface CardProps extends Omit<HTMLMotionProps<"div">, "className" | "children"> {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
-  className?: string
   variant?: 'default' | 'dark'
-  hover?: boolean
+  withAnimation?: boolean
   delay?: number
+  hover?: boolean
 }
 
-export function Card({ 
-  children, 
-  className, 
+export function Card({
+  children,
+  className,
   variant = 'default',
-  hover = true,
+  withAnimation = true,
   delay = 0,
-  ...props 
+  hover = false,
+  ...props
 }: CardProps) {
-  const baseStyles = "relative p-8 border transition-all duration-300"
+  const baseStyles = "relative overflow-hidden rounded-[32px] p-8"
   const variantStyles = {
-    default: "border-black/5 bg-white/50",
-    dark: "border-white/10 bg-white/5"
+    default: cn(
+      "bg-white/80 backdrop-blur-xl border border-black/5 shadow-lg shadow-black/[0.03]",
+      hover && "hover:bg-white/90 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/[0.05]"
+    ),
+    dark: cn(
+      "bg-black/80 backdrop-blur-xl border border-white/5 shadow-lg shadow-black/[0.03] text-white",
+      hover && "hover:bg-black/90 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/[0.05]"
+    )
   }
-  const hoverStyles = hover ? "group" : ""
+
+  const content = (
+    <div 
+      className={cn(
+        baseStyles, 
+        variantStyles[variant],
+        "group transition-all duration-300",
+        className
+      )}
+      {...props}
+    >
+      {/* Content */}
+      <div className="relative">
+        {children}
+      </div>
+    </div>
+  )
+
+  if (!withAnimation) return content
 
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay }}
-      className="relative"
-      {...props}
+      transition={{ 
+        delay,
+        duration: 0.2,
+        ease: [0.16, 1, 0.3, 1]
+      }}
     >
-      {hover && (
-        <div className="absolute inset-0 bg-gradient-to-br from-black/[0.02] to-black/[0.02] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-      )}
-      <div className={cn(baseStyles, variantStyles[variant], hoverStyles, className)}>
-        {children}
-      </div>
+      {content}
     </motion.div>
   )
 } 

@@ -23,6 +23,7 @@ import { Card } from '@/components/ui/Card'
 import { Heading } from '@/components/ui/Heading'
 import { Marquee } from '@/components/shared/Marquee/Marquee'
 import { SearchBar } from '@/components/shared/Search/SearchBar'
+import { Badge } from '@/components/ui/Badge'
 
 // Feature definitions with consistent structure and better typing
 interface Feature {
@@ -127,7 +128,7 @@ export default function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white overflow-x-hidden">
       {/* Header */}
       <HomeNav />
       
@@ -136,19 +137,16 @@ export default function HomePage() {
       
       {/* Hero Section */}
       <Section 
-        className="min-h-[calc(100vh-84px)] flex items-center justify-center relative overflow-hidden"
+        className="min-h-[calc(100vh-64px)] flex items-center justify-center relative overflow-hidden"
         variant="default"
-        gridSize="large"
         withGradient={true}
         gradientPosition="center"
       >
-        <div className="grid-pattern-overlay opacity-30" />
-        
-        <div className="max-w-[90rem] w-full mx-auto relative py-20">
-          <div className="max-w-4xl mx-auto px-4">
-            <div className="space-y-4 text-center mb-12">
+        <div className="w-full mx-auto relative py-12 sm:py-24">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6">
+            <div className="space-y-4 text-center mb-10 sm:mb-16">
               <div className="space-y-2">
-                <div className="font-mono text-[clamp(2.5rem,5vw,3.5rem)] font-bold leading-tight tracking-tight">
+                <div className="font-mono text-[clamp(2.5rem,6vw,4rem)] font-bold leading-[1.1] tracking-tight">
                   IL TUO MANAGER
                   <br />
                   DELLA REPUTAZIONE
@@ -163,7 +161,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4 }}
-              className="mb-12"
+              className="mb-10 sm:mb-16"
             >
               <SearchBar />
             </motion.div>
@@ -172,24 +170,23 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="flex items-center justify-center gap-8"
+              className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6"
             >
               <Link
                 href="/auth/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-mono text-sm rounded-full hover:bg-white hover:text-black border border-black transition-colors group relative overflow-hidden"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 bg-black text-white font-mono text-sm rounded-full hover:bg-black/90 border border-black/5 transition-colors active:scale-[0.98] touch-manipulation"
               >
-                <span className="relative z-10">INIZIA ORA</span>
-                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1 relative z-10" />
-                <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <span>INIZIA ORA</span>
+                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
-              <span className="font-mono text-sm text-gray-500">
+              <Badge variant="secondary" className="w-full sm:w-auto text-center py-3">
                 14 giorni di prova gratuita
-              </span>
+              </Badge>
             </motion.div>
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto px-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mt-16 sm:mt-24 max-w-5xl mx-auto px-4 sm:px-6">
             {[
               {
                 icon: ClockIcon,
@@ -209,13 +206,13 @@ export default function HomePage() {
             ].map((stat, index) => (
               <Card
                 key={stat.value}
-                hover={true}
+                withAnimation={true}
                 delay={0.8 + index * 0.1}
-                className="brutalist-card p-8 aspect-[4/3] text-center"
+                className="p-6 sm:p-8 min-h-[160px] text-center group active:scale-[0.98] transition-transform touch-manipulation"
               >
-                <stat.icon className="w-10 h-10 mb-6 text-black mx-auto" />
-                <div className="font-mono text-5xl font-bold mb-3">{stat.value}</div>
-                <div className="font-mono text-sm text-gray-600">{stat.label}</div>
+                <stat.icon className="w-8 h-8 sm:w-9 sm:h-9 mb-4 sm:mb-5 text-black mx-auto transition-transform group-hover:scale-110" />
+                <div className="font-mono text-3xl sm:text-4xl font-bold mb-2 sm:mb-3 group-hover:text-gray-900 transition-colors">{stat.value}</div>
+                <div className="font-mono text-xs sm:text-sm text-gray-600 group-hover:text-gray-900 transition-colors line-clamp-2">{stat.label}</div>
               </Card>
             ))}
           </div>
@@ -223,67 +220,60 @@ export default function HomePage() {
       </Section>
 
       {/* Marquee */}
-      <div className="py-6 border-y border-black/5 bg-white relative overflow-hidden">
-        <div className="gradient-blur opacity-50" />
+      <div className="py-5 sm:py-6 border-y border-black/5 bg-white/80 backdrop-blur-xl relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-white/20" />
         <Marquee items={marqueeItems} speed={20} />
       </div>
 
       {/* Features Section */}
       <Section
         variant="default"
-        gridSize="small"
         withGradient={true}
         gradientPosition="right"
-        className="relative overflow-hidden py-16"
+        className="relative overflow-hidden py-16 sm:py-24"
         id="features"
       >
-        <div className="grid-pattern-overlay opacity-50" />
-        <div className="max-w-7xl mx-auto">
-          <Heading as="h2" size="7xl" className="mb-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <Heading as="h2" size="4xl" className="text-center mb-6">
             CARATTERISTICHE_
           </Heading>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-sans text-xl mb-12 text-gray-600 max-w-2xl"
+            className="font-mono text-base sm:text-lg text-gray-600 max-w-2xl mx-auto text-center mb-12 sm:mb-16 px-4"
           >
             Tutto ciò di cui hai bisogno per gestire le tue recensioni in modo efficiente
           </motion.p>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
             {features.map(({ title, description, icon: Icon, delay, category }, index) => (
               <Card 
                 key={title}
+                withAnimation={true}
                 delay={delay}
-                className="p-8 aspect-[3/4] group relative overflow-hidden"
-                hover={true}
+                className="p-6 sm:p-8 min-h-[260px] group relative overflow-hidden active:scale-[0.98] transition-transform touch-manipulation"
               >
                 {/* Category Badge */}
-                <div className="absolute top-4 right-4">
-                  <span className="font-mono text-xs px-2 py-1 bg-black/5 rounded-full">
-                    {category?.toUpperCase()}
-                  </span>
-                </div>
+                <Badge variant="secondary" className="absolute top-4 right-4 text-xs">
+                  {category?.toUpperCase()}
+                </Badge>
 
                 {/* Feature Content */}
                 <div className="h-full flex flex-col">
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="font-mono text-xl text-black/50">0{index + 1}_</span>
-                    <Icon className="w-6 h-6 text-black transition-transform group-hover:scale-110" />
+                  <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
+                    <span className="font-mono text-lg sm:text-xl text-black/50">0{index + 1}_</span>
+                    <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-black transition-transform group-hover:scale-110" />
                   </div>
                   
-                  <h3 className="font-mono text-2xl mb-4 group-hover:text-accent transition-colors">
+                  <h3 className="font-mono text-lg sm:text-xl mb-3 sm:mb-4 text-gray-900 group-hover:text-black transition-colors line-clamp-2">
                     {title}
                   </h3>
                   
-                  <p className="font-sans text-gray-600 group-hover:text-gray-900 transition-colors">
+                  <p className="font-mono text-xs sm:text-sm text-gray-600 group-hover:text-gray-900 transition-colors line-clamp-4">
                     {description}
                   </p>
                 </div>
-
-                {/* Decorative Elements */}
-                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
               </Card>
             ))}
           </div>
@@ -293,43 +283,41 @@ export default function HomePage() {
       {/* How it Works Section */}
       <Section
         variant="dark"
-        gridSize="large"
         withGradient={true}
         gradientPosition="center"
-        className="relative overflow-hidden py-16 bg-black"
+        className="relative overflow-hidden py-16 sm:py-24 bg-black"
         id="how-it-works"
       >
-        <div className="grid-pattern-overlay-dark opacity-50" />
-        <div className="max-w-7xl mx-auto">
-          <Heading as="h2" size="7xl" variant="dark" className="text-center mb-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <Heading as="h2" size="4xl" variant="dark" className="text-center mb-6">
             COME FUNZIONA_
           </Heading>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-mono text-lg text-gray-400 max-w-2xl mx-auto text-center mb-20"
+            className="font-mono text-base sm:text-lg text-gray-400 max-w-2xl mx-auto text-center mb-12 sm:mb-16 px-4"
           >
             Inizia a gestire le tue recensioni in modo efficiente in soli tre semplici passaggi
           </motion.p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
             {steps.map(({ title, description, icon: Icon }, index) => (
               <Card
                 key={title}
                 variant="dark"
+                withAnimation={true}
                 delay={0.4 + index * 0.1}
-                className="p-8 aspect-square"
-                hover={true}
+                className="p-6 sm:p-8 min-h-[220px] group active:scale-[0.98] transition-transform touch-manipulation"
               >
                 <div className="h-full flex flex-col">
-                  <div className="flex items-center gap-4 mb-8">
-                    <span className="font-mono text-4xl text-white/30">0{index + 1}</span>
-                    <Icon className="w-8 h-8 text-white" />
+                  <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-6">
+                    <span className="font-mono text-3xl sm:text-4xl text-white/30">0{index + 1}</span>
+                    <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-white transition-transform group-hover:scale-110" />
                   </div>
                   
-                  <h3 className="font-mono text-2xl mb-4 text-white">{title}</h3>
-                  <p className="font-sans text-gray-400">{description}</p>
+                  <h3 className="font-mono text-lg sm:text-xl mb-3 sm:mb-4 text-white group-hover:text-white/90 transition-colors line-clamp-2">{title}</h3>
+                  <p className="font-mono text-xs sm:text-sm text-gray-400 group-hover:text-gray-300 transition-colors line-clamp-3">{description}</p>
                 </div>
               </Card>
             ))}
@@ -340,44 +328,43 @@ export default function HomePage() {
       {/* Testimonials Section */}
       <Section
         variant="default"
-        gridSize="small"
         withGradient={true}
         gradientPosition="left"
-        className="relative overflow-hidden py-16"
+        className="relative overflow-hidden py-16 sm:py-24"
       >
-        <div className="max-w-7xl mx-auto">
-          <Heading as="h2" size="7xl" className="text-center mb-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <Heading as="h2" size="4xl" className="text-center mb-6">
             TESTIMONIANZE_
           </Heading>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-mono text-lg text-gray-600 max-w-2xl mx-auto text-center mb-20"
+            className="font-mono text-base sm:text-lg text-gray-600 max-w-2xl mx-auto text-center mb-12 sm:mb-16 px-4"
           >
             Cosa dicono i nostri clienti
           </motion.p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
             {testimonials.map(({ quote, author, role, rating }, index) => (
               <Card
                 key={author}
+                withAnimation={true}
                 delay={0.4 + index * 0.1}
-                className="p-8 aspect-square"
-                hover={true}
+                className="p-6 sm:p-8 min-h-[280px] group active:scale-[0.98] transition-transform touch-manipulation"
               >
                 <div className="h-full flex flex-col">
-                  <div className="flex gap-1 mb-8">
+                  <div className="flex gap-1 mb-5 sm:mb-6">
                     {Array.from({ length: rating }).map((_, i) => (
-                      <StarIcon key={i} className="w-5 h-5 text-yellow-400" />
+                      <StarIcon key={i} className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" />
                     ))}
                   </div>
                   
-                  <p className="font-sans text-gray-600 mb-8 flex-grow">{quote}</p>
+                  <p className="font-mono text-xs sm:text-sm text-gray-600 mb-5 sm:mb-6 flex-grow group-hover:text-gray-900 transition-colors line-clamp-6">{quote}</p>
                   
                   <div>
-                    <div className="font-mono text-lg font-bold">{author}</div>
-                    <div className="font-mono text-sm text-gray-500">{role}</div>
+                    <div className="font-mono text-base sm:text-lg font-bold group-hover:text-gray-900 transition-colors line-clamp-1">{author}</div>
+                    <div className="font-mono text-xs sm:text-sm text-gray-500 group-hover:text-gray-600 transition-colors line-clamp-1">{role}</div>
                   </div>
                 </div>
               </Card>
@@ -389,37 +376,36 @@ export default function HomePage() {
       {/* Benefits Section */}
       <Section
         variant="dark"
-        gridSize="large"
         withGradient={true}
         gradientPosition="right"
-        className="relative overflow-hidden py-16 bg-zinc-900"
+        className="relative overflow-hidden py-16 sm:py-24 bg-zinc-900"
       >
-        <div className="max-w-7xl mx-auto">
-          <Heading as="h2" size="7xl" variant="dark" className="text-center mb-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <Heading as="h2" size="4xl" variant="dark" className="text-center mb-6">
             VANTAGGI_
           </Heading>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-mono text-lg text-gray-400 max-w-2xl mx-auto text-center mb-20"
+            className="font-mono text-base sm:text-lg text-gray-400 max-w-2xl mx-auto text-center mb-12 sm:mb-16 px-4"
           >
             Perché scegliere Orion per la gestione della tua reputazione
           </motion.p>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6">
             {benefits.map(({ title, description, icon: Icon }, index) => (
               <Card
                 key={title}
                 variant="dark"
+                withAnimation={true}
                 delay={0.4 + index * 0.1}
-                className="p-8 aspect-square"
-                hover={true}
+                className="p-6 sm:p-8 min-h-[220px] group active:scale-[0.98] transition-transform touch-manipulation"
               >
                 <div className="h-full flex flex-col">
-                  <Icon className="w-10 h-10 text-white mb-8" />
-                  <h3 className="font-mono text-2xl mb-4 text-white">{title}</h3>
-                  <p className="font-sans text-gray-400">{description}</p>
+                  <Icon className="w-7 h-7 sm:w-8 sm:h-8 text-white mb-5 sm:mb-6 transition-transform group-hover:scale-110" />
+                  <h3 className="font-mono text-lg sm:text-xl mb-3 sm:mb-4 text-white group-hover:text-white/90 transition-colors line-clamp-2">{title}</h3>
+                  <p className="font-mono text-xs sm:text-sm text-gray-400 group-hover:text-gray-300 transition-colors line-clamp-3">{description}</p>
                 </div>
               </Card>
             ))}
@@ -430,21 +416,20 @@ export default function HomePage() {
       {/* Pricing Section */}
       <Section
         variant="default"
-        gridSize="small"
         withGradient={true}
         gradientPosition="center"
-        className="relative overflow-hidden py-16"
+        className="relative overflow-hidden py-16 sm:py-24"
         id="pricing"
       >
-        <div className="max-w-7xl mx-auto">
-          <Heading as="h2" size="7xl" className="text-center mb-4">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <Heading as="h2" size="4xl" className="text-center mb-6">
             PREZZI_
           </Heading>
           
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="font-mono text-lg text-gray-600 max-w-2xl mx-auto text-center mb-20"
+            className="font-mono text-base sm:text-lg text-gray-600 max-w-2xl mx-auto text-center mb-12 sm:mb-16 px-4"
           >
             Scegli il piano più adatto alle tue esigenze
           </motion.p>

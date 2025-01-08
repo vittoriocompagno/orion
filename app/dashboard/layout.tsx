@@ -2,7 +2,6 @@
 
 import { Sidebar, Header } from '@/components/shared';
 
-
 const mockStats = {
   averageRating: 4.8,
   totalReviews: 128,
@@ -11,7 +10,7 @@ const mockStats = {
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#f5f5f5] flex">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50/50 to-rose-50/50 flex">
       <Sidebar />
 
       <div className="flex-1 flex flex-col min-h-screen">
@@ -20,7 +19,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           hasNotifications={true}
         />
 
-        <main className="flex-1 p-6 overflow-auto bg-[#f5f5f5]">
+        <main className="flex-1 p-6 overflow-auto">
           <div className="max-w-6xl mx-auto">
             {children}
           </div>

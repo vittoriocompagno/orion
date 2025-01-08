@@ -1,150 +1,92 @@
+'use client'
+
+import { Heading } from '@/components/ui/Heading'
+import { Card } from '@/components/ui/Card'
+
+const responseTemplates = [
+  {
+    id: '1',
+    name: 'Risposta Positiva',
+    content: 'Grazie mille per il tuo feedback positivo! Siamo felici che tu sia rimasto soddisfatto del nostro servizio. Il tuo apprezzamento ci motiva a continuare a migliorare.',
+    type: 'positive'
+  },
+  {
+    id: '2',
+    name: 'Risposta Neutra',
+    content: 'Grazie per il tuo feedback. Apprezziamo i tuoi commenti e li useremo per migliorare i nostri servizi. Se hai suggerimenti specifici, non esitare a contattarci direttamente.',
+    type: 'neutral'
+  },
+  {
+    id: '3',
+    name: 'Risposta Negativa',
+    content: 'Ci dispiace molto per la tua esperienza negativa. Vorremmo avere l\'opportunità di risolvere i problemi riscontrati. Puoi contattarci direttamente per discuterne?',
+    type: 'negative'
+  }
+]
+
 export default function ResponsesPage() {
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="pb-6 border-b border-gray-700">
-        <h1 className="font-mono text-2xl mb-2">RISPOSTE AUTOMATICHE_</h1>
-        <p className="font-mono text-sm text-gray-700">
-          Configura le risposte automatiche per diversi tipi di recensioni.
+      <div className="pb-6 border-b border-black/5">
+        <Heading className="mb-2">RISPOSTE_</Heading>
+        <p className="font-mono text-sm text-gray-600">
+          Gestisci i template delle risposte automatiche.
         </p>
       </div>
 
-      {/* Response Templates */}
-      <div className="space-y-6">
-        {/* Positive Reviews Template */}
-        <div className="border border-gray-700 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-green-500">●</span>
-              <h2 className="font-mono text-xl">RECENSIONI POSITIVE</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                RIPRISTINA DEFAULT
-              </button>
-              <button className="font-mono text-sm px-4 py-2 bg-black text-white border border-gray-700 hover:translate-y-[-2px] transition-transform">
-                SALVA
-              </button>
-            </div>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block font-mono text-sm text-gray-700 mb-2">
-                TEMPLATE RISPOSTA
-              </label>
-              <textarea 
-                className="w-full h-32 px-4 py-3 font-mono text-sm bg-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-accent resize-none"
-                placeholder="Grazie per il tuo feedback positivo! Siamo felici che tu sia soddisfatto del nostro servizio."
-              ></textarea>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4 border border-gray-700" />
-              <label className="font-mono text-sm text-gray-700">
-                INVIA AUTOMATICAMENTE
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* Neutral Reviews Template */}
-        <div className="border border-gray-700 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-yellow-500">●</span>
-              <h2 className="font-mono text-xl">RECENSIONI NEUTRE</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                RIPRISTINA DEFAULT
-              </button>
-              <button className="font-mono text-sm px-4 py-2 bg-black text-white border border-gray-700 hover:translate-y-[-2px] transition-transform">
-                SALVA
-              </button>
-            </div>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block font-mono text-sm text-gray-700 mb-2">
-                TEMPLATE RISPOSTA
-              </label>
-              <textarea 
-                className="w-full h-32 px-4 py-3 font-mono text-sm bg-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-accent resize-none"
-                placeholder="Grazie per il tuo feedback. Apprezziamo i tuoi suggerimenti e lavoreremo per migliorare il nostro servizio."
-              ></textarea>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4 border border-gray-700" />
-              <label className="font-mono text-sm text-gray-700">
-                INVIA AUTOMATICAMENTE
-              </label>
-            </div>
-          </div>
-        </div>
-
-        {/* Negative Reviews Template */}
-        <div className="border border-gray-700 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <span className="text-red-500">●</span>
-              <h2 className="font-mono text-xl">RECENSIONI NEGATIVE</h2>
-            </div>
-            <div className="flex items-center gap-2">
-              <button className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                RIPRISTINA DEFAULT
-              </button>
-              <button className="font-mono text-sm px-4 py-2 bg-black text-white border border-gray-700 hover:translate-y-[-2px] transition-transform">
-                SALVA
-              </button>
-            </div>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <label className="block font-mono text-sm text-gray-700 mb-2">
-                TEMPLATE RISPOSTA
-              </label>
-              <textarea 
-                className="w-full h-32 px-4 py-3 font-mono text-sm bg-white border border-gray-700 focus:outline-none focus:ring-2 focus:ring-accent resize-none"
-                placeholder="Ci dispiace per la tua esperienza negativa. Vorremmo saperne di più per migliorare il nostro servizio."
-              ></textarea>
-            </div>
-            
-            <div className="flex items-center gap-2">
-              <input type="checkbox" className="w-4 h-4 border border-gray-700" />
-              <label className="font-mono text-sm text-gray-700">
-                INVIA AUTOMATICAMENTE
-              </label>
-            </div>
-          </div>
-        </div>
+      {/* Actions */}
+      <div className="flex justify-end">
+        <button className="px-4 py-2 font-mono text-sm bg-black text-white hover:bg-black/90 transition-colors rounded-full">
+          NUOVO TEMPLATE
+        </button>
       </div>
 
-      {/* Variables Help */}
-      <div className="border border-gray-700 p-6">
-        <h3 className="font-mono text-lg mb-4">VARIABILI DISPONIBILI</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="font-mono text-sm">
-            <code className="text-accent">{'{{nome_cliente}}'}</code>
-            <span className="text-gray-700 ml-2">Nome del recensore</span>
-          </div>
-          <div className="font-mono text-sm">
-            <code className="text-accent">{'{{voto}}'}</code>
-            <span className="text-gray-700 ml-2">Valutazione (1-5)</span>
-          </div>
-          <div className="font-mono text-sm">
-            <code className="text-accent">{'{{data}}'}</code>
-            <span className="text-gray-700 ml-2">Data della recensione</span>
-          </div>
-          <div className="font-mono text-sm">
-            <code className="text-accent">{'{{azienda}}'}</code>
-            <span className="text-gray-700 ml-2">Nome della tua azienda</span>
-          </div>
-        </div>
+      {/* Templates Grid */}
+      <div className="grid grid-cols-1 gap-6">
+        {responseTemplates.map((template) => (
+          <Card key={template.id} className="group hover:scale-[1.01] transition-transform">
+            <div className="flex items-start justify-between mb-4">
+              <div>
+                <h3 className="font-mono text-lg text-gray-600 group-hover:text-gray-900 transition-colors">
+                  {template.name}
+                </h3>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className={`w-2 h-2 rounded-full ${
+                    template.type === 'positive' ? 'bg-green-500' :
+                    template.type === 'neutral' ? 'bg-yellow-500' :
+                    'bg-red-500'
+                  }`} />
+                  <span className="font-mono text-sm text-gray-600 capitalize">
+                    {template.type}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button className="font-mono text-sm text-gray-600 hover:text-black transition-colors">
+                  ELIMINA
+                </button>
+                <button className="px-4 py-2 font-mono text-sm bg-black text-white hover:bg-black/90 transition-colors rounded-full">
+                  MODIFICA
+                </button>
+              </div>
+            </div>
+
+            <div className="p-4 bg-black/[0.02] border border-black/5 rounded-2xl font-mono text-sm">
+              {template.content}
+            </div>
+
+            <div className="flex items-center justify-between mt-4 pt-4 border-t border-black/5">
+              <div className="font-mono text-xs text-gray-600">
+                ULTIMA MODIFICA: 2 GIORNI FA
+              </div>
+              <div className="font-mono text-xs text-gray-600">
+                UTILIZZATO 24 VOLTE
+              </div>
+            </div>
+          </Card>
+        ))}
       </div>
     </div>
-  );
+  )
 } 

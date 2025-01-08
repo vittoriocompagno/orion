@@ -1,0 +1,37 @@
+ORION UI STYLE GUIDE
+
+The design language combines neo-brutalism with modern glass morphism, creating a unique "Glassy Brutalism" aesthetic.
+
+Key Characteristics:
+
+1. Glass Effects
+- Semi-transparent whites (bg-white/50, bg-white/70)
+- Backdrop blur effects (backdrop-blur-xl, backdrop-blur-lg)
+- Subtle shadows (shadow-black/[0.03])
+- Light borders (border-black/5, border-black/10)
+
+2. Rounded Geometry
+- Pill-shaped containers (rounded-full)
+- Large rounded corners for dropdowns (rounded-[32px])
+- Circular avatars
+- Soft edges contrasting with brutalist elements
+
+3. Typography
+- Monospace font family (font-mono)
+- Clean hierarchical sizing
+- Muted grays for secondary text (text-gray-600)
+- Bold black for emphasis
+
+4. Interactive Elements
+- Subtle hover states (hover:bg-black/[0.02])
+- Smooth transitions (transition-colors, transition-all)
+- Visible focus states
+- Clean, uncluttered spacing
+
+5. Layout
+- Generous padding (px-6 py-4)
+- Consistent gaps (gap-4, gap-8)
+- Strategic use of borders for separation
+- Balanced white space
+
+The style achieves a modern, airy feel while maintaining visual interest through the contrast between glass effects and brutalist elements. It prioritizes readability and usability while creating a distinctive, contemporary aesthetic. 

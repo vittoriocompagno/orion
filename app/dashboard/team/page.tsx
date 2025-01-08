@@ -1,187 +1,157 @@
+'use client'
+
+import { Heading } from '@/components/ui/Heading'
+import { Card } from '@/components/ui/Card'
+import { Badge } from '@/components/ui/Badge'
+import { Input } from '@/components/ui/Input'
+import { Modal } from '@/components/ui/Modal'
+import { Select } from '@/components/ui/Select'
+import { Toggle } from '@/components/ui/Toggle'
+import { UserPlus, Mail, User, Settings, Shield } from 'lucide-react'
+import { useState } from 'react'
+
+const mockTeamMembers = [
+  {
+    id: '1',
+    name: 'Marco Rossi',
+    email: 'marco@example.com',
+    role: 'admin',
+    status: 'active',
+    lastActive: '2024-01-08T10:30:00Z'
+  },
+  {
+    id: '2',
+    name: 'Laura Bianchi',
+    email: 'laura@example.com',
+    role: 'manager',
+    status: 'active',
+    lastActive: '2024-01-08T09:15:00Z'
+  },
+  {
+    id: '3',
+    name: 'Giuseppe Verdi',
+    email: 'giuseppe@example.com',
+    role: 'viewer',
+    status: 'pending',
+    lastActive: null
+  }
+]
+
 export default function TeamPage() {
+  const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
+
   return (
     <div className="space-y-8">
       {/* Header */}
-      <div className="pb-6 border-b border-gray-700">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="font-mono text-2xl mb-2">TEAM_</h1>
-            <p className="font-mono text-sm text-gray-700">
-              Gestisci i membri del team e i loro permessi.
-            </p>
-          </div>
-          <button className="font-mono text-sm px-4 py-2 bg-black text-white border border-gray-700 hover:translate-y-[-2px] transition-transform">
-            INVITA MEMBRO
-          </button>
-        </div>
+      <div className="pb-6 border-b border-black/5">
+        <Heading className="mb-2">TEAM_</Heading>
+        <p className="font-mono text-sm text-gray-600">
+          Gestisci i membri del team e i loro permessi.
+        </p>
       </div>
 
-      {/* Active Members */}
-      <div className="space-y-6">
-        <h2 className="font-mono text-xl">MEMBRI ATTIVI</h2>
-        
-        <div className="border border-gray-700">
-          {/* Table Header */}
-          <div className="grid grid-cols-4 gap-4 p-4 border-b border-gray-700 font-mono text-sm text-gray-700">
-            <div>UTENTE</div>
-            <div>RUOLO</div>
-            <div>ULTIMO ACCESSO</div>
-            <div className="text-right">AZIONI</div>
-          </div>
+      {/* Actions */}
+      <div className="flex flex-col sm:flex-row gap-4">
+        <Input
+          placeholder="Cerca membri..."
+          className="flex-1"
+        />
+        <button
+          onClick={() => setIsInviteModalOpen(true)}
+          className="px-4 py-2 font-mono text-sm bg-black text-white hover:bg-black/90 transition-colors rounded-full inline-flex items-center gap-2"
+        >
+          <UserPlus className="w-4 h-4" />
+          INVITA MEMBRO
+        </button>
+      </div>
 
-          {/* Table Body */}
-          <div className="divide-y divide-gray-700">
-            {/* Member Row */}
-            <div className="grid grid-cols-4 gap-4 p-4 items-center">
-              <div className="font-mono text-sm">
-                <div>Marco Rossi</div>
-                <div className="text-gray-700">marco@azienda.com</div>
+      {/* Team Members List */}
+      <div className="grid grid-cols-1 gap-6">
+        {mockTeamMembers.map((member) => (
+          <Card key={member.id} className="group">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-full bg-black/[0.02] border border-black/5 flex items-center justify-center">
+                  <User className="w-5 h-5 text-gray-600" />
+                </div>
+                <div>
+                  <h3 className="font-mono text-lg text-gray-900 mb-1">
+                    {member.name}
+                  </h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    <Mail className="w-4 h-4 text-gray-600" />
+                    <span className="font-mono text-sm text-gray-600">
+                      {member.email}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Badge
+                      variant={member.status === 'active' ? 'success' : 'warning'}
+                    >
+                      {member.status.toUpperCase()}
+                    </Badge>
+                    <Badge variant="secondary" className="flex items-center gap-1">
+                      <Shield className="w-3 h-3" />
+                      {member.role.toUpperCase()}
+                    </Badge>
+                  </div>
+                </div>
               </div>
-              <div>
-                <span className="font-mono text-sm px-2 py-1 bg-black text-white">
-                  ADMIN
-                </span>
-              </div>
-              <div className="font-mono text-sm text-gray-700">
-                2 ORE FA
-              </div>
-              <div className="text-right">
-                <button className="font-mono text-sm text-accent hover:underline">
-                  MODIFICA
+              <div className="flex items-center gap-4">
+                <button className="p-2 hover:bg-black/[0.02] rounded-full transition-colors">
+                  <Settings className="w-5 h-5 text-gray-600" />
                 </button>
               </div>
             </div>
 
-            {/* Member Row */}
-            <div className="grid grid-cols-4 gap-4 p-4 items-center">
-              <div className="font-mono text-sm">
-                <div>Laura Bianchi</div>
-                <div className="text-gray-700">laura@azienda.com</div>
+            {member.lastActive && (
+              <div className="mt-4 pt-4 border-t border-black/5">
+                <div className="font-mono text-xs text-gray-600">
+                  ULTIMO ACCESSO: {new Date(member.lastActive).toLocaleString('it-IT')}
+                </div>
               </div>
-              <div>
-                <span className="font-mono text-sm px-2 py-1 border border-gray-700">
-                  MODERATORE
-                </span>
-              </div>
-              <div className="font-mono text-sm text-gray-700">
-                5 ORE FA
-              </div>
-              <div className="text-right">
-                <button className="font-mono text-sm text-accent hover:underline">
-                  MODIFICA
-                </button>
-              </div>
-            </div>
-
-            {/* Member Row */}
-            <div className="grid grid-cols-4 gap-4 p-4 items-center">
-              <div className="font-mono text-sm">
-                <div>Giuseppe Verdi</div>
-                <div className="text-gray-700">giuseppe@azienda.com</div>
-              </div>
-              <div>
-                <span className="font-mono text-sm px-2 py-1 border border-gray-700">
-                  VISUALIZZATORE
-                </span>
-              </div>
-              <div className="font-mono text-sm text-gray-700">
-                1 GIORNO FA
-              </div>
-              <div className="text-right">
-                <button className="font-mono text-sm text-accent hover:underline">
-                  MODIFICA
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+            )}
+          </Card>
+        ))}
       </div>
 
-      {/* Pending Invites */}
-      <div className="space-y-6">
-        <h2 className="font-mono text-xl">INVITI IN SOSPESO</h2>
-        
-        <div className="border border-gray-700">
-          <div className="p-4 flex items-center justify-between">
-            <div className="font-mono text-sm">
-              <div>anna@azienda.com</div>
-              <div className="text-gray-700">Inviato 2 giorni fa</div>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                ANNULLA INVITO
-              </button>
-              <button className="font-mono text-sm text-accent hover:underline">
-                INVIA DI NUOVO
-              </button>
-            </div>
+      {/* Invite Modal */}
+      <Modal
+        isOpen={isInviteModalOpen}
+        onClose={() => setIsInviteModalOpen(false)}
+        title="INVITA NUOVO MEMBRO"
+      >
+        <div className="space-y-6">
+          <Input
+            label="INDIRIZZO EMAIL"
+            placeholder="email@example.com"
+          />
+          <Select
+            label="RUOLO"
+            options={[
+              { value: 'admin', label: 'AMMINISTRATORE' },
+              { value: 'manager', label: 'MANAGER' },
+              { value: 'viewer', label: 'VISUALIZZATORE' }
+            ]}
+          />
+          <Toggle
+            label="NOTIFICA VIA EMAIL"
+            description="Invia una email di invito al nuovo membro"
+            checked={true}
+          />
+          <div className="flex justify-end gap-4">
+            <button
+              onClick={() => setIsInviteModalOpen(false)}
+              className="px-4 py-2 font-mono text-sm text-gray-600 hover:text-black transition-colors"
+            >
+              ANNULLA
+            </button>
+            <button className="px-4 py-2 font-mono text-sm bg-black text-white hover:bg-black/90 transition-colors rounded-full">
+              INVIA INVITO
+            </button>
           </div>
         </div>
-      </div>
-
-      {/* Roles and Permissions */}
-      <div className="space-y-6">
-        <h2 className="font-mono text-xl">RUOLI E PERMESSI</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Admin Role */}
-          <div className="border border-gray-700 p-6">
-            <h3 className="font-mono text-lg mb-4">ADMIN</h3>
-            <ul className="space-y-2 font-mono text-sm">
-              <li className="flex items-center gap-2">
-                <span className="text-green-500">●</span>
-                Gestione team
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-green-500">●</span>
-                Gestione risposte
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-green-500">●</span>
-                Configurazione
-              </li>
-            </ul>
-          </div>
-
-          {/* Moderator Role */}
-          <div className="border border-gray-700 p-6">
-            <h3 className="font-mono text-lg mb-4">MODERATORE</h3>
-            <ul className="space-y-2 font-mono text-sm">
-              <li className="flex items-center gap-2">
-                <span className="text-red-500">●</span>
-                Gestione team
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-green-500">●</span>
-                Gestione risposte
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-yellow-500">●</span>
-                Configurazione
-              </li>
-            </ul>
-          </div>
-
-          {/* Viewer Role */}
-          <div className="border border-gray-700 p-6">
-            <h3 className="font-mono text-lg mb-4">VISUALIZZATORE</h3>
-            <ul className="space-y-2 font-mono text-sm">
-              <li className="flex items-center gap-2">
-                <span className="text-red-500">●</span>
-                Gestione team
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-red-500">●</span>
-                Gestione risposte
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-red-500">●</span>
-                Configurazione
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
+      </Modal>
     </div>
-  );
+  )
 } 

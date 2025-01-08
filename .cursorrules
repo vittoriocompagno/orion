@@ -1,403 +1,193 @@
-# Design Choices for Orion
-You are an expert in TypeScript, Node.js, Next.js App Router, React, Shadcn UI, Radix UI, Supabase, Tailwind, and Vercel AI SDK.**Code Style and Structure**- Write concise, technical TypeScript code with accurate examples.- Use functional and declarative programming patterns; avoid classes.- Prefer iteration and modularization over code duplication.- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).- Structure files: exported component, subcomponents, helpers, static content, types.**Naming Conventions**- Use lowercase with dashes for directories (e.g., components/auth-wizard).- Favor named exports for components.**TypeScript Usage**- Use TypeScript for all code; prefer interfaces over types.- Avoid enums; use const objects or as const assertions instead.- Use functional components with TypeScript interfaces.**Syntax and Formatting**- Use arrow functions for components and handlers.- Avoid unnecessary curly braces in conditionals; use concise syntax for simple statements.- Use declarative JSX.**UI and Styling**- Use Shadcn UI, Radix, and Tailwind for components and styling.- Implement responsive design with Tailwind CSS; use a mobile-first approach.**Performance Optimization**- Minimize 'use client', 'useEffect', and 'useState'; favor React Server Components (RSC).- Wrap client components in Suspense with fallback.- Use dynamic loading for non-critical components.- Optimize images: use Next.js Image component, include size data, implement lazy loading.**Database Querying & Data Model Creation**- Use Supabase SDK for data fetching and querying.- For data model creation, use Supabase's schema builder.**Key Conventions**- Use 'nuqs' for URL search parameter state management.- Optimize Web Vitals (LCP, CLS, FID).- Limit 'use client': - Favor server components and Next.js SSR. - Use only for Web API access in small components. - Avoid for data fetching or state management.**Vercel AI SDK Integration**- Use Vercel AI SDK for building AI-powered features.- Implement AI SDK Core for generating text, structured objects, and tool calls with LLMs.- Utilize AI SDK UI hooks for building chat interfaces.- Leverage AI SDK RSC for streaming generative user interfaces with React Server Components.**Data Fetching and API Routes**- Use Next.js App Router conventions for data fetching and API routes.- Implement efficient caching and revalidation strategies using Next.js built-in features.- Use route handlers (route.ts) for API routes in the App Router.**Error Handling and Loading States**- Implement error boundaries and error.tsx files for error handling.- Use loading.tsx files for managing loading states.**SEO and Metadata**- Use Next.js 14's metadata API for SEO optimization.**Follow Next.js docs for Data Fetching, Rendering, and Routing.**
+Okay, ecco le istruzioni riviste, senza la roadmap e tradotte in inglese:
 
-## 1. Panoramica
+## Detailed Instructions for Generating ORION - Review Analysis and Management Platform
 
-**Nome Progetto**: ORION  
-**Lingua di Sviluppo**: Italiano (Interfaccia utente, codice e documentazione)  
-**Stile**: Brutale/Monospazio, Minimalista, con tocchi moderni (Ispirato a *cursor.com* e *awwwards.com*)
+This document outlines the requirements for creating ORION, a review analysis and management platform built using Next.js with the App Router, Supabase, and Vercel AI SDK. The application will be developed following TypeScript, React, Shadcn UI, and Tailwind CSS best practices, while maintaining a **brutalist/monospaced** style inspired by *cursor.com* and *awwwards.com*.
 
-### 1.1 Obiettivo
+## 1. Technical Specifications
 
-ORION è una piattaforma che **aggrega recensioni** da Google (e in futuro, da altre piattaforme), **esegue l'analisi del sentiment** e abilita **risposte automatizzate**. L'interfaccia utente sarà **decisa, essenziale**, con font monospazio e layout a blocchi, ma arricchita da animazioni eleganti e micro-interazioni ispirate a *awwwards.com*.
-Create a Next.js app that uses App Router with Supabase Auth.
+### 1.1. Technology Stack
 
-Follow Supabase's guidelines for using the `@supabase/ssr` package and Server-Side Auth. Specifically, there should be:
+*   **Language:** TypeScript
+*   **Framework:** Next.js (App Router)
+*   **UI:** React, Shadcn UI, Radix UI
+*   **AUTH:** Kinde
+*   **Styling:** Tailwind CSS
+*   **Database:** Supabase
+*   **AI:** Vercel AI SDK
+*   **Hosting:** Vercel (optimized for)
+*   **Additional Libraries:** `nuqs` (URL state management), `framer-motion` (animations)
 
-- A utility function to create a client on the client side
-- A utility function create a client on the server side, using the Next.js `cookies` API to access the cookies. Use the latest version of the API, where `cookies` must be awaited.
-- A utility function to handle refreshing the user session in middleware.
+### 1.2. Coding Conventions
 
-## Working with cookies
+*   **Architecture:** Functional components, composition, declarative programming patterns.
+*   **TypeScript:** Interfaces (preferred over `type`), `const` objects (instead of `enums`), descriptive variables (e.g., `isLoading`, `hasError`).
+*   **File Structure:** Main components (named exports), subcomponents, helpers, types, static data.
+*   **Naming:** Directory names `lowercase-with-dashes`, components exported by name.
+*   **Syntax:** Arrow functions, declarative JSX, avoid redundancy in conditionals.
+*   **UI:** Strict use of Shadcn UI and Radix UI for components; Tailwind for styling and mobile-first responsive design.
+*   **Performance:** Server components by default, `use client` limited to Web API interactions, `Suspense` for loading, dynamic import, Next.js image optimization.
 
-Use the latest version of `@supabase/ssr`, where cookie options are defined with the `getAll` and `setAll` functions, like so:
+## 2. Authentication and Middleware
 
-```
-const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
-```
+### 2.1. Supabase Authentication
 
-No other cookie options should be provided.
+*   Implement authentication using Supabase Auth, following the **cookie-based** pattern.
+*   Use `@supabase/ssr` for server-side management of user sessions.
+*   Create client and server helpers for Supabase client creation:
+    *   **Client-side:** Use `createClient` (supabase/client.ts).
+    *   **Server-side:** Use `createServerClient` (supabase/server.ts) and `cookies` API.
 
-## Middleware
+### 2.2. `updateSession` Function in Middleware
 
-The middleware should use the following `updateSession` function:
+*   Implement `updateSession` in `middleware.ts` for refreshing user sessions.
+*   Handle redirects for non-authenticated users.
+*   Use `NextResponse.next({ request })` while keeping cookies intact.
 
-```
-import { createServerClient } from '@supabase/ssr'
-import { NextResponse, type NextRequest } from 'next/server'
+```typescript
+// middleware.ts
+
+import { createServerClient } from '@supabase/ssr';
+import { NextResponse, type NextRequest } from 'next/server';
 
 export async function updateSession(request: NextRequest) {
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => request.cookies.set(name, value))
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
-
-  // IMPORTANT: Avoid writing any logic between createServerClient and
-  // supabase.auth.getUser(). A simple mistake could make it very hard to debug
-  // issues with users being randomly logged out.
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
-  if (
-    !user &&
-    !request.nextUrl.pathname.startsWith('/login') &&
-    !request.nextUrl.pathname.startsWith('/auth')
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
-  }
-
-  // IMPORTANT: You *must* return the supabaseResponse object as it is. If you're
-  // creating a new response object with NextResponse.next() make sure to:
-  // 1. Pass the request in it, like so:
-  //    const myNewResponse = NextResponse.next({ request })
-  // 2. Copy over the cookies, like so:
-  //    myNewResponse.cookies.setAll(supabaseResponse.cookies.getAll())
-  // 3. Change the myNewResponse object to fit your needs, but avoid changing
-  //    the cookies!
-  // 4. Finally:
-  //    return myNewResponse
-  // If this is not done, you may be causing the browser and server to go out
-  // of sync and terminate the user's session prematurely!
-
-  return supabaseResponse
+  //... (as in the original instructions) ...
 }
----
+```
 
-## 2. Funzionalità Chiave
+## 3. Core Functionalities
 
-### 2.1. Centralizzazione delle Recensioni
+### 3.1. Review Aggregation (Google Reviews)
 
-*   Integrazione iniziale **esclusivamente con Google Reviews**.
-*   Recupero e visualizzazione di tutte le recensioni in un'unica dashboard.
+*   Retrieve and display reviews from Google Reviews.
+*   Provide options for inputting the Google API key and configurations.
+*   Display reviews in a dashboard.
 
-### 2.2. Analisi del Sentiment
+### 3.2. Sentiment Analysis
 
-*   Classificazione dei feedback in **Positivo, Neutro o Negativo**.
-*   Calcolo di metriche aggregate (es. percentuale di recensioni positive).
+*   Classify reviews into: Positive, Neutral, Negative.
+*   Calculate aggregate metrics (percentage of positive reviews, average score).
 
-### 2.3. Auto-Responder
+### 3.3. Auto-Responder
 
-*   Possibilità di definire risposte predefinite per ciascun tipo di sentiment.
-*   Esempio: "Grazie per il tuo feedback positivo!"
-*   (Sviluppo futuro) Invio automatico delle risposte su Google, se supportato dalle API.
+*   Define pre-defined responses for each type of sentiment.
+*   Option for automatic sending of responses (future functionality).
 
-### 2.4. Dashboard e Analisi
+### 3.4. Dashboard
 
-*   **Panoramica**: Numero totale di recensioni, valutazione media, trend del sentiment.
-*   (Sviluppo futuro) **Grafici** avanzati, monitoraggio delle parole chiave, filtri dettagliati.
+*   Overview: number of reviews, average rating, sentiment trends.
+*   Filters for sentiment, rating, period.
+*   Advanced charts and analysis (future functionality).
 
-### 2.5. Scalabilità
+### 3.5. Scalability
 
-*   Integrazione futura con altre piattaforme (Yelp, TripAdvisor, ecc.).
-*   Gestione di ruoli utente multipli (admin, manager, staff).
-*   Funzionalità AI avanzate: risposte più "intelligenti", sentiment personalizzato, ecc.
+*   Future integration with other platforms (Yelp, TripAdvisor).
+*   Management of user roles (admin, manager, staff).
+*   AI functionalities (smarter responses).
 
----
+## 4. Design and Visual Style
 
-## 3. Requisiti Tecnici e Architettura
+### 4.1. Aesthetics
 
-### 3.1. Stack Tecnologico
+*   **Brutalist/Monospaced:** Inspired by *cursor.com* and *awwwards.com*.
+*   **Fonts:**
+    *   `Space Mono` for titles, buttons.
+    *   `DM Sans` for body text.
+*   **Colors:**
+    *   `--bg: #f5f5f5` (light gray).
+    *   `black: #000000`.
+*   **Layout:** Blocks, thin borders, sharp corners.
 
-*   **Frontend**: Next.js 14, App Router, TypeScript.
-*   **Database/Backend**: Supabase/Postgres, o un BaaS equivalente (es. Appwrite).
-*   **Stile**: Tailwind CSS con estetica **brutalista/monospazio**.
-    *   Font Titoli: "Space Mono" o simile.
-    *   Font Testi: "DM Sans" o simile.
-*   **Hosting**: Preferibilmente Vercel, con valutazione di CI/CD.
+### 4.2. UI Elements
 
-### 3.2. Struttura dei Dati
+*   **Cards:** Consistent padding and spacing.
+*   **Sections:** Components with gradient options.
+*   **Buttons:** Pill-shaped with hover gradients.
+*   **Animations:** Fade-in, slide-up, smooth transitions.
+*   **Marquee:** Single-line for showcasing features and integrations.
 
-*   **User**:
-    *   `email`
-    *   `password` (criptata)
-    *   `nome`
-    *   `piano_abbonamento`
-*   **Review**:
-    *   `rating`
-    *   `testo`
-    *   `sentiment`
-    *   `data`
-    *   `user_id`
-*   **AutoResponder** (futuro): Configurazione risposte personalizzate.
+### 4.3. Layout & Structure
 
-### 3.3. Autenticazione
+*   Navigation: Homepage with hero section, CTA "Try Orion".
+*   Onboarding: Initial configuration (e.g., business name, Google API).
+*   Dashboard: Display of reviews, sentiment, quick replies.
 
-*   Autenticazione tramite email/password o provider esterni (es. Google Sign-In).
-*   Gestione della sessione integrata con Next.js (Server Components o SSR).
+## 5. Vercel AI SDK Implementation
 
-### 3.4. Sicurezza
+*   Use Vercel AI SDK for AI functionalities.
+*   Implement AI SDK Core for generating text and structured objects.
+*   Use AI SDK UI hooks for chat interfaces.
+*   Use AI SDK RSC for streaming generative UI.
 
-*   Rate limiting su rotte sensibili (autenticazione, API).
-*   Validazione degli input e protezione dei dati sensibili in `.env`.
-*   HTTPS in ambiente di produzione.
+## 6. Database and Data Model
 
-### 3.5. Best Practices
+### 6.1. Supabase Schema
 
-*   Linting e formattazione del codice (ESLint, Prettier).
-*   Documentazione in formato `.md` con commenti JSDoc.
-*   Test di base:
-    *   Test unitari per le funzioni di analisi del sentiment.
-    *   Test E2E per i flussi principali.
+*   Create a schema consistent with ORION's entities.
+*   Use the Supabase schema builder to define tables and relationships.
+*   Implement Row Level Security (RLS) and access policies.
+*   Example tables:
+    *   `reviews` (id, business_id, content, sentiment, rating, date).
+    *   `businesses` (id, name, api_key).
+    *   `users` (id, name, email).
 
----
+### 6.2. Supabase SDK
 
-## 4. Esperienza Utente (UX) e Stile Visivo
+*   Use the Supabase SDK for data fetching, querying, and auth.
+*   Optimize queries and caching.
 
-### 4.1. Ispirazione
+## 7. User Flow
 
-*   *cursor.com*
-*   *awwwards.com*
-*   Layout pulito, forte enfasi sulla tipografia monospazio.
-*   Spaziature nette, uso limitato del colore (eccetto per l'accento, es. `#FF7F5C`).
-*   Micro-interazioni, transizioni fluide, eventuale utilizzo di elementi in marquee.
+### 7.1. Registration and Onboarding
 
-### 4.2. Linee Guida Visive
+*   Account creation (email/password, optional social login).
+*   Preference configuration (e.g., business name, Google API connection).
 
-*   **Palette Colori**:
-    *   `--bg: #f5f5f5` (grigio chiaro)
-    *   `--accent: #FF7F5C` (corallo)
-    *   `black: #000000`
-*   **Font**:
-    *   Titoli, Bottoni: "Space Mono"
-    *   Testi: "DM Sans"
-*   **Layout**: Blocchi, bordi sottili (evitare bordi spessi), angoli netti (non arrotondati).
+### 7.2. Dashboard
 
-### 4.3. Navigazione e Flusso Utente
+*   Display of reviews, sentiment, average rating, filters.
+*   Quick replies or automatic sending (if enabled).
 
-*   **Homepage**: Minimalista, con un "hero section" di grande impatto e una chiara CTA "Prova Orion".
-*   **Signup/Login** → Onboarding (configurazioni iniziali, eventuale collegamento all'account Google).
-*   **Dashboard**: Visualizzazione recensioni, sentiment e risposte rapide.
-*   Animazioni discrete ma d'impatto: stati "hover", transizioni tra sezioni.
+### 7.3. Sentiment Analysis
 
----
+*   Labeling as Positive, Negative, Neutral, and calculating percentages.
+*   Use libraries like `sentiment`.
 
-## 5. Flusso Utente Principale
-
-### 5.1. Registrazione
-
-*   Creazione di un account utente (email/password o social login).
-*   Possibile onboarding multi-step per la configurazione delle preferenze (es. nome dell'attività, settore).
-
-### 5.2. Collegamento a Google (Opzionale nella fase iniziale, possibile utilizzo di dati mock)
-
-*   Inserimento della chiave API di Google o autenticazione tramite OAuth.
-*   Recupero delle recensioni basato su un ID "luogo" specifico (Google Places).
-
-### 5.3. Dashboard
-
-*   Visualizzazione delle recensioni, del sentiment, del conteggio totale e del rating medio.
-*   Filtri per sentiment, valutazione e periodo.
-*   Pulsanti per risposte rapide (o invio automatico, se l'auto-responder è attivo).
-
-### 5.4. Analisi del Sentiment
-
-*   Utilizzo della libreria npm `sentiment` o equivalente (versione base).
-*   Etichettatura delle recensioni come Positive (P), Negative (N) o Neutre (Neutro), con calcolo delle percentuali.
-
-### 5.5. Auto-Responder
-
-*   Campi per la creazione di template di risposta predefiniti.
-*   Invio diretto delle risposte su Google (se possibile), altrimenti archiviazione locale.
-
----
-
-## 6. Interazione con l'Utente (Cursor/LLM)
-
-Durante la generazione del codice, l'IA dovrà:
-
-1. **Richiedere chiarimenti** in caso di informazioni mancanti (es. "Hai una chiave API di Google?").
-2. **Proporre opzioni** per il tipo di database, l'hosting e i metodi di deployment.
-3. **Ottenere conferma** sulle scelte effettuate (es. piani di abbonamento, stile dell'interfaccia utente).
-
-**Esempio di domanda**:
-
-> "Per l'onboarding, preferisci un processo multi-step (nome attività, convalida email, collegamento API) o una singola pagina?"
-
----
-
-## 7. Roadmap e Priorità
-
-### 7.1. MVP (2-3 settimane)
-
-*   Autenticazione di base (email/password).
-*   Integrazione con Google Reviews (possibile utilizzo di dati mock nella fase iniziale).
-*   Dashboard con elenco delle recensioni, sentiment e rating medio.
-*   Risposte automatiche semplici (integrazione con Google opzionale in questa fase).
-
-### 7.2. Fasi Successive
-
-*   Supporto per piattaforme aggiuntive (Yelp, TripAdvisor).
-*   Funzionalità AI avanzate per risposte "intelligenti".
-*   Piani di abbonamento a pagamento (con limiti sul numero di recensioni e funzionalità premium).
-*   Pannello di amministrazione e statistiche sull'utilizzo globale.
-
----
-
-## 8. Deliverables e Documentazione
-
-### 8.1. Codice Next.js 14
-
-*   Struttura delle cartelle:
-    *   `/app` (App Router: `layout.tsx`, `page.tsx`, ecc.)
-    *   `/components` (Componenti UI riutilizzabili, con stile brutalista)
-    *   `/lib` o `/utils` (Funzioni per API Google, analisi del sentiment, auto-responder)
-
-### 8.2. Configurazione e Variabili d'Ambiente
-
-*   `.env.local` (Chiavi API, credenziali del database)
-*   `.env.example` (File di esempio per la configurazione)
-
-### 8.3. README.md
-
-*   Istruzioni per l'installazione e l'esecuzione in locale.
-*   Istruzioni per il deployment (es. su Vercel).
-*   Informazioni sulle librerie utilizzate (es. `sentiment` per l'analisi del sentiment, `@supabase/supabase-js` se si utilizza Supabase).
-
-### 8.4. Test di Base
-
-*   Almeno un test unitario per la logica di analisi del sentiment.
-*   Eventuali test E2E per il flusso di login e l'accesso alla dashboard.
-
----
-
-## 9. Istruzioni Finali per la Generazione del Codice
-
-*   **Genera** l'intero progetto basandoti su questo PRD.
-*   **Segui** le best practice di sicurezza e performance.
-*   **Richiedi** eventuali adattamenti per l'hosting, il database o preferenze di design aggiuntive.
-*   **Assicurati** che l'interfaccia utente rispecchi lo **stile brutale/monospazio** ispirato a *cursor.com* e *awwwards.com*:
-    *   Tipografia di grandi dimensioni, uso limitato del colore, micro-interazioni di qualità.
-
----
-
-## 10. Supabase Integration Best Practices
-
-### 10.1. Project Setup
-- Use the official `with-supabase` template when creating new Next.js projects:
-  ```bash
-  npx create-next-app -e with-supabase
-  ```
-- Follow cookie-based auth pattern for better security and SSR compatibility
-
-### 10.2. Environment Variables
-- Store Supabase credentials in `.env.local`:
-  ```
-  NEXT_PUBLIC_SUPABASE_URL=your-project-url
-  NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-  ```
-- Never commit actual credentials to version control
-- Provide `.env.example` with placeholder values
-
-### 10.3. Client Creation
-- Server Components: Use `createClient` from `@/utils/supabase/server`
-- Client Components: Use `createClient` from `@/utils/supabase/client`
-- Middleware: Use `createServerClient` from `@supabase/ssr`
-
-### 10.4. Database Access
-- Enable Row Level Security (RLS) on all tables
-- Create explicit policies for data access:
-  ```sql
-  alter table table_name enable row level security;
-  create policy "policy_name" on table_name for operation to role using (condition);
-  ```
-- Use TypeScript for better type safety with database operations
-
-### 10.5. Authentication Flow
-Use Kinde for authentication
-
-### 10.6. Data Fetching
-- Use Server Components for initial data fetching when possible
-- Implement proper error handling for database queries
-- Cache responses when appropriate using Next.js caching mechanisms
-
-### 10.7. Security Considerations
-- Always use RLS policies
-- Never expose sensitive data through public APIs
-- Validate all user input
-- Use prepared statements for database queries
-- Implement proper CORS policies
-
-### 10.8. Performance
-- Use edge functions when possible
-- Implement proper caching strategies
-- Use connection pooling in production
-- Optimize database queries
-
-
-### 10.10. Testing
-- Test auth flows
-- Test database queries
-- Test RLS policies
-- Implement E2E tests for critical paths
-
----
-
-**Fine del PRD**
-
-Questo documento fornisce una guida dettagliata per l'interazione con Cursor (o un altro LLM) al fine di generare un'applicazione Next.js coerente con il brand Orion, ben documentata e pronta per la crescita futura.
-
-# Design Choices
-
-- **Accent Color**: Black gradient for a modern and sleek look.
-- **Font Choices**: Space Mono for headings and DM Sans for body text to maintain a brutalist aesthetic.
-- **Layout**: Utilizes a block layout with sharp edges and minimalistic design.
-- **Animations**: Includes subtle animations like fade-in and slide-up for a dynamic user experience.
-- **Dark Mode**: Implemented but toggle removed for simplicity.
-- **Responsive Design**: Ensures usability across different devices and screen sizes.
-- **Marquee**: Single line marquee for showcasing key features and integrations.
-- **Button Styles**: Uses black gradient for a bold and cohesive look.
-- **Cursor Follower**: Adds an interactive element to enhance user engagement. 
+### 7.4. Auto-Responder
+
+*   Creation of pre-defined response templates.
+*   Sending on Google or local storage (depending on Google API).
+
+## 8. Best Practices
+
+*   Linting and formatting (ESLint, Prettier).
+*   Documentation `.md` with JSDoc.
+*   Unit tests (sentiment analysis) and E2E tests (main flows).
+*   Efficient caching and revalidation (Next.js).
+*   Error handling: error boundaries and `error.tsx`.
+*   Loading states: `loading.tsx`
+*   SEO: Metadata API from Next.js 14.
+
+## 9. Instructions for the AI
+
+*   Generate the entire project based on these instructions.
+*   Follow best practices for security and performance.
+*   Request any necessary clarifications (e.g., "Do you have the Google API key?").
+*   Suggest options for database and hosting.
+*   Confirm the choices made (e.g., onboarding type).
+*   Ensure the user interface reflects the brutalist/monospaced style.
+
+## 10. Supabase Best Practices
+
+*   Create the project with the `with-supabase` template: `npx create-next-app -e with-supabase`.
+*   Use environment variables in the `.env.local` file and provide `.env.example`.
+*   Enable RLS for Supabase tables.
+*   Use TypeScript for type safety in database operations.
+*    Use `Kinde` for authentication.
+*   Use Server Components for initial data fetching when possible and implement error handling.
+*   Optimize queries and use Next.js caching when needed.
+*   Implement authentication, database, and RLS tests.
+
+**End of Instructions**
+
+This revised document provides a more detailed and structured set of instructions for generating the ORION platform. It outlines technical specifications, core functionalities, visual design guidelines, and best practices to ensure a cohesive and performant application.

@@ -2,7 +2,10 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useState } from 'react';
-import {PricingCard} from '@/components/shared/Pricing/PricingCard';
+import { PricingCard } from '@/components/shared/Pricing/PricingCard';
+import { Section } from '@/components/ui/Section';
+import { Heading } from '@/components/ui/Heading';
+import { motion } from 'framer-motion';
 
 interface PricingPlan {
   name: string;
@@ -19,36 +22,36 @@ const plans: PricingPlan[] = [
     name: "BASE",
     monthlyPrice: 9,
     features: [
-      "50 recensioni/mese",
-      "Analisi base del sentiment",
-      "Risposte automatiche"
+      "50 reviews/month",
+      "Basic sentiment analysis",
+      "Auto responses"
     ],
     isPopular: false,
-    ctaText: "SCEGLI BASE"
+    ctaText: "CHOOSE BASE"
   },
   {
     name: "PRO",
     monthlyPrice: 29,
     features: [
-      "200 recensioni/mese",
-      "Analisi avanzata del sentiment",
-      "Risposte personalizzate AI",
-      "Dashboard analytics"
+      "200 reviews/month",
+      "Advanced sentiment analysis",
+      "AI personalized responses",
+      "Analytics dashboard"
     ],
     isPopular: true,
-    ctaText: "SCEGLI PRO"
+    ctaText: "CHOOSE PRO"
   },
   {
     name: "ENTERPRISE",
     monthlyPrice: null,
     features: [
-      "Recensioni illimitate",
-      "Analisi sentiment custom",
-      "API dedicata",
+      "Unlimited reviews",
+      "Custom sentiment analysis",
+      "Dedicated API",
       "Account manager"
     ],
     isPopular: false,
-    ctaText: "CONTATTACI"
+    ctaText: "CONTACT US"
   }
 ];
 
@@ -65,75 +68,120 @@ export default function PricingSection() {
   };
 
   return (
-    <section className="px-6 md:px-4 py-24 md:py-20 bg-surface border-b-4 border-gray-900">
-      <div className="section-container">
-        <h2 className="text-5xl md:text-7xl font-mono font-bold mb-4">PREZZI_</h2>
-        <p className="text-xl mb-8 font-sans text-gray-700">Scegli il piano più adatto alle tue esigenze</p>
+    <Section 
+      variant="dark" 
+      gridSize="small"
+      withGradient={true}
+      gradientPosition="center"
+      className="relative"
+      id="pricing"
+    >
+      <div className="max-w-7xl mx-auto">
+        <Heading as="h2" size="7xl" variant="dark" className="mb-4">
+          PRICING_
+        </Heading>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-xl mb-8 font-sans text-gray-400"
+        >
+          Choose the plan that best fits your needs
+        </motion.p>
 
         {/* Billing Toggle */}
-        <div className="flex justify-center items-center gap-4 mb-12">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="flex justify-center items-center gap-4 mb-12"
+        >
           <button 
             onClick={() => setIsAnnual(false)}
             className={`font-mono px-4 py-2 transition-colors duration-200 ${
-              !isAnnual ? 'text-accent border-b-2 border-accent' : 'text-gray-700'
+              !isAnnual ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'
             }`}
           >
-            Mensile
+            Monthly
           </button>
           <button 
             onClick={() => setIsAnnual(true)}
             className={`font-mono px-4 py-2 transition-colors duration-200 ${
-              isAnnual ? 'text-accent border-b-2 border-accent' : 'text-gray-700'
+              isAnnual ? 'text-white border-b-2 border-white' : 'text-gray-400 hover:text-white'
             }`}
           >
-            Annuale (-20%)
+            Annual (-20%)
           </button>
-        </div>
+        </motion.div>
         
         {/* Desktop Grid */}
         <div className="hidden md:grid md:grid-cols-3 gap-8">
           {plans.map((plan, index) => (
-            <PricingCard key={index} plan={plan} isAnnual={isAnnual} />
+            <motion.div
+              key={plan.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 * (index + 1) }}
+            >
+              <PricingCard plan={plan} isAnnual={isAnnual} />
+            </motion.div>
           ))}
         </div>
 
         {/* Mobile Carousel */}
         <div className="md:hidden">
-          <PricingCard plan={plans[currentIndex]} isAnnual={isAnnual} />
+          <motion.div
+            key={plans[currentIndex].name}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+          >
+            <PricingCard plan={plans[currentIndex]} isAnnual={isAnnual} />
+          </motion.div>
 
           {/* Mobile Navigation */}
           <div className="flex justify-between items-center mt-8">
             <button 
               onClick={prevPlan}
-              className="p-3 border-2 border-gray-900 shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform bg-white"
+              className="p-3 bg-white/10 backdrop-blur-lg rounded-full hover:bg-white/20 transition-colors"
             >
-              <ChevronLeft size={24} />
+              <ChevronLeft size={24} className="text-white" />
             </button>
             <div className="flex gap-2">
               {plans.map((_, index) => (
                 <div 
                   key={index}
                   className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                    index === currentIndex ? 'bg-accent' : 'bg-gray-300'
+                    index === currentIndex ? 'bg-white' : 'bg-white/20'
                   }`}
                 />
               ))}
             </div>
             <button 
               onClick={nextPlan}
-              className="p-3 border-2 border-gray-900 shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform bg-white"
+              className="p-3 bg-white/10 backdrop-blur-lg rounded-full hover:bg-white/20 transition-colors"
             >
-              <ChevronRight size={24} />
+              <ChevronRight size={24} className="text-white" />
             </button>
           </div>
         </div>
 
-        <div className="flex justify-center mt-8">
-          <button className="font-mono px-8 py-4 text-xl shadow-brutal hover:translate-x-1 hover:-translate-y-1 transition-transform border-2 bg-black text-white border-gray-900">
-            INIZIA ORA
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="flex justify-center mt-12"
+        >
+          <button className="font-mono px-8 py-4 text-xl bg-white text-black rounded-full hover:bg-black hover:text-white border border-white transition-colors group relative overflow-hidden">
+            <span className="relative z-10">START NOW</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </button>
-        </div>
+        </motion.div>
+
+        {/* Decorative Elements */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-96 h-96 bg-gradient-to-br from-white/[0.03] to-transparent rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-0 left-1/4 w-64 h-64 bg-gradient-to-tr from-white/[0.03] to-transparent rounded-full blur-3xl -z-10" />
       </div>
-    </section>
+    </Section>
   );
 } 

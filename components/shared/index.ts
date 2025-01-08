@@ -1,11 +1,10 @@
-export { Sidebar, Header } from './dashboard';
-export { FeaturesSection, CountingNumber, CursorFollower } from './Features';
-export { UserMenu, MobileMenu } from './Menu';
-export { HomeNav } from './HomeNav';
-export { StatsSection, TestimonialsSection } from './SocialProof';
-export { RoadmapSection } from './Roadmap';
-export { PricingSection, PricingCard } from './Pricing';
-export { MarqueeSection } from './Marquee';
-export { Navbar } from './Navbar';
-export { HeroSection } from './Hero';
-export { Footer } from './Footer';
+export { HomeNav } from './HomeNav/HomeNav'
+export { Footer } from './Footer/Footer'
+export { PricingTable } from './Pricing/PricingTable'
+export { GradientFollower } from './GradientFollower'
+export { default as HeroSection } from './Hero/HeroSection'
+export { FeaturesSection } from './Features/FeaturesSection'
+export { default as PricingSection } from './Pricing/PricingSection'
+export { PricingCard } from './Pricing/PricingCard'
+export { Sidebar } from './dashboard/Sidebar'
+export { Header } from './dashboard/Header'

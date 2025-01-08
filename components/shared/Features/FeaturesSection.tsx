@@ -1,4 +1,10 @@
+'use client'
+
 import { Database, LineChart, MessageSquareText, LucideIcon } from 'lucide-react';
+import { Section } from '@/components/ui/Section';
+import { Heading } from '@/components/ui/Heading';
+import { Card } from '@/components/ui/Card';
+import { motion } from 'framer-motion';
 
 interface Feature {
   number: string;
@@ -10,55 +16,70 @@ interface Feature {
 const features = [
   {
     number: '01',
-    title: 'CENTRALIZZA',
-    description: "Tutte le tue recensioni Google in un'unica dashboard. Presto anche Yelp e TripAdvisor.",
+    title: 'CENTRALIZE',
+    description: "All your Google reviews in a single dashboard. Soon also Yelp and TripAdvisor.",
     icon: Database
   },
   {
     number: '02',
-    title: 'ANALIZZA',
-    description: 'Analisi del sentiment automatica. Comprendi il mood dei tuoi clienti in tempo reale.',
+    title: 'ANALYZE',
+    description: 'Automatic sentiment analysis. Understand your customers mood in real time.',
     icon: LineChart
   },
   {
     number: '03',
-    title: 'RISPONDI',
-    description: 'Risposte automatiche intelligenti basate sul sentiment. Risparmia tempo prezioso.',
+    title: 'RESPOND',
+    description: 'Smart automatic responses based on sentiment. Save precious time.',
     icon: MessageSquareText
   },
 ] as const;
 
 export function FeaturesSection() {
   return (
-    <section className="px-4 py-20 bg-white border-b border-gray-900" aria-labelledby="features-heading">
+    <Section 
+      variant="default"
+      gridSize="small"
+      withGradient={true}
+      gradientPosition="right"
+      className="relative"
+      id="features"
+    >
       <div className="max-w-7xl mx-auto">
-        <h2 id="features-heading" className="font-mono text-5xl md:text-7xl font-bold mb-4">
+        <Heading as="h2" size="7xl" className="mb-4">
           FEATURES_
-        </h2>
+        </Heading>
         
-        <p className="font-sans text-xl mb-12 text-gray-700">
-          Tutto ciò di cui hai bisogno per gestire le tue recensioni
-        </p>
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="font-sans text-xl mb-12 text-gray-600"
+        >
+          Everything you need to manage your reviews
+        </motion.p>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {features.map(({ number, title, description, icon: Icon }) => (
-            <div 
+          {features.map(({ number, title, description, icon: Icon }, index) => (
+            <Card 
               key={number}
-              className="group border-2 border-gray-900 p-8 bg-surface 
-                         hover:translate-x-1 hover:-translate-y-1 
-                         transition-transform duration-200"
+              delay={0.2 * (index + 1)}
+              className="p-8"
+              hover={true}
             >
               <div className="flex items-center gap-4 mb-4">
-                <span className="font-mono text-xl text-accent">{number}_</span>
-                <Icon size={24} className="text-accent" />
+                <span className="font-mono text-xl text-black/50">{number}_</span>
+                <Icon size={24} className="text-black" />
               </div>
               
               <h3 className="font-mono text-2xl mb-4">{title}</h3>
-              <p className="font-sans text-gray-700">{description}</p>
-            </div>
+              <p className="font-sans text-gray-600">{description}</p>
+            </Card>
           ))}
         </div>
+
+        {/* Decorative Elements */}
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-64 h-64 bg-gradient-to-br from-black/[0.02] to-transparent rounded-full blur-3xl -z-10" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-gradient-to-tr from-black/[0.02] to-transparent rounded-full blur-3xl -z-10" />
       </div>
-    </section>
+    </Section>
   );
 } 

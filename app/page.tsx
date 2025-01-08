@@ -14,9 +14,14 @@ import {
   CheckCircleIcon,
   ArrowTrendingUpIcon,
   UserGroupIcon,
-  BuildingOfficeIcon
 } from '@heroicons/react/24/outline'
-import { HomeNav } from '@/components/shared'
+import { HomeNav, Footer, PricingTable } from '@/components/shared'
+import { GradientFollower } from '@/components/shared/GradientFollower'
+import { Section } from '@/components/ui/Section'
+import { Card } from '@/components/ui/Card'
+import { Heading } from '@/components/ui/Heading'
+import { Marquee } from '@/components/shared/Marquee/Marquee'
+
 export default function HomePage() {
   const features = [
     {
@@ -96,380 +101,352 @@ export default function HomePage() {
     }
   ]
 
+  const marqueeItems = [
+    'RECENSIONI AUTOMATIZZATE',
+    'ANALISI DEL SENTIMENT',
+    'RISPOSTE INTELLIGENTI',
+    'MONITORAGGIO 24/7',
+    'DASHBOARD INTUITIVA',
+    'INTEGRAZIONE API',
+    'SUPPORTO MULTILINGUA',
+    'REPORT DETTAGLIATI'
+  ]
+
   return (
-    <div className="min-h-screen bg-[#f5f5f5]">
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <HomeNav />
+      
+      {/* Gradient Follower */}
+      <GradientFollower />
+      
       {/* Hero Section */}
-      <motion.section 
-        className="pt-40 pb-32 px-4 relative overflow-hidden"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+      <Section 
+        className="min-h-[calc(100vh-84px)] flex items-center justify-center relative overflow-hidden"
+        variant="default"
+        gridSize="large"
+        withGradient={true}
+        gradientPosition="center"
       >
-        {/* Minimal background pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015]" />
+        <div className="grid-pattern-overlay opacity-30" />
         
-        <div className="max-w-6xl mx-auto relative">
+        <div className="max-w-[90rem] w-full mx-auto relative py-20">
           <motion.div 
-            className="max-w-3xl"
+            className="floating-element max-w-4xl mx-auto relative p-12"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
           >
-            {/* Accent line */}
-            <div className="w-24 h-1 bg-black mb-8" />
-            
-            <h1 className="font-mono text-6xl font-bold leading-tight mb-8 tracking-tight">
-              IL TUO REPUTATION
-              <br />
-              <span className="inline-flex items-center gap-4">
-                MANAGER
-                <span className="text-gray-500 font-normal">AUTOMATIZZATO_</span>
-              </span>
-            </h1>
-            <p className="font-mono text-xl text-gray-700 mb-12 leading-relaxed max-w-2xl">
-              Orion scansiona il web 24/7 per proteggere e migliorare la tua reputazione online.
-              <span className="block mt-4 font-bold">La tua presenza digitale sotto controllo, sempre.</span>
-            </p>
-            <div className="flex items-center gap-8">
+            {/* Code-like decoration */}
+            <div className="absolute -left-8 top-4 font-mono text-gray-300 select-none">
+              <div>01</div>
+              <div>02</div>
+              <div>03</div>
+            </div>
+
+            <div className="space-y-4 text-center">
+              <div className="space-y-2">
+                <div className="font-mono text-[clamp(3.5rem,8vw,6.5rem)] font-bold leading-[0.9] tracking-tight">
+                  LA TUA
+                  <br />
+                  REPUTAZIONE
+                </div>
+                <div className="flex flex-wrap items-baseline justify-center gap-4 text-[clamp(2.5rem,6vw,4.5rem)] leading-none tracking-tight">
+                  <span className="font-mono font-bold">MANAGER</span>
+                  <span className="font-mono text-gray-400">AUTOMATIZZATO_</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Code-like snippet */}
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="relative mt-12 mb-8 pl-4 border-l-2 border-black/10 font-mono max-w-lg mx-auto"
+            >
+              <div className="text-xl text-gray-600 leading-relaxed">
+                <span className="text-purple-600">const</span> <span className="text-blue-600">orion</span> = {'{'}
+                <br />
+                &nbsp;&nbsp;scansione: <span className="text-green-600">'24/7'</span>,
+                <br />
+                &nbsp;&nbsp;protezione: <span className="text-green-600">'reputazione'</span>,
+                <br />
+                &nbsp;&nbsp;ambito: <span className="text-green-600">'presenza digitale'</span>
+                <br />
+                {'}'};
+              </div>
+            </motion.div>
+
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6 }}
+              className="flex items-center justify-center gap-8"
+            >
               <Link
                 href="/auth/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-mono text-sm hover:bg-white hover:text-black border-2 border-black transition-all duration-300 group rounded-sm hover:shadow-[5px_5px_0px_0px_rgba(0,0,0)] transform hover:-translate-y-0.5"
+                className="inline-flex items-center gap-2 px-8 py-4 bg-black text-white font-mono text-sm rounded-full hover:bg-white hover:text-black border border-black transition-colors group relative overflow-hidden"
               >
-                INIZIA ORA
-                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                <span className="relative z-10">INIZIA ORA</span>
+                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1 relative z-10" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </Link>
               <span className="font-mono text-sm text-gray-500">
                 14 giorni di prova gratuita
               </span>
-            </div>
+            </motion.div>
           </motion.div>
 
-          {/* Enhanced Stats */}
-          <motion.div 
-            className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-32 pt-20 border-t border-black/10 relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            {/* Background accent */}
-            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-black/5 to-transparent opacity-20" />
-            
-            <div className="flex items-start gap-6 p-8 bg-white backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-colors group">
-              <ClockIcon className="w-10 h-10 flex-shrink-0 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="font-mono text-5xl font-bold mb-3">24/7</div>
-                <div className="font-mono text-sm text-gray-700">Monitoraggio continuo della reputazione</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-6 p-8 bg-white backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-colors group">
-              <UserGroupIcon className="w-10 h-10 flex-shrink-0 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="font-mono text-5xl font-bold mb-3">+85%</div>
-                <div className="font-mono text-sm text-gray-700">Miglioramento della reputazione</div>
-              </div>
-            </div>
-            <div className="flex items-start gap-6 p-8 bg-white backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-colors group">
-              <ArrowTrendingUpIcon className="w-10 h-10 flex-shrink-0 group-hover:scale-110 transition-transform" />
-              <div>
-                <div className="font-mono text-5xl font-bold mb-3">-45%</div>
-                <div className="font-mono text-sm text-gray-700">Riduzione delle criticità</div>
-              </div>
-            </div>
-          </motion.div>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-5xl mx-auto px-4">
+            {[
+              {
+                icon: ClockIcon,
+                value: '24/7',
+                label: 'Monitoraggio continuo della reputazione'
+              },
+              {
+                icon: UserGroupIcon,
+                value: '+85%',
+                label: 'Miglioramento della reputazione'
+              },
+              {
+                icon: ArrowTrendingUpIcon,
+                value: '-45%',
+                label: 'Riduzione delle criticità'
+              }
+            ].map((stat, index) => (
+              <Card
+                key={stat.value}
+                hover={true}
+                delay={0.8 + index * 0.1}
+                className="brutalist-card p-8 aspect-[4/3] text-center"
+              >
+                <stat.icon className="w-10 h-10 mb-6 text-black mx-auto" />
+                <div className="font-mono text-5xl font-bold mb-3">{stat.value}</div>
+                <div className="font-mono text-sm text-gray-600">{stat.label}</div>
+              </Card>
+            ))}
+          </div>
         </div>
-      </motion.section>
+      </Section>
 
-      {/* Enhanced How it Works */}
-      <section className="py-32 px-4 bg-white/90 border-y border-black/10 relative overflow-hidden">
-        {/* Minimal background pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015]" />
-        
-        <div className="max-w-6xl mx-auto relative">
-          <motion.div
+      {/* Marquee */}
+      <div className="py-6 border-y border-black/5 bg-white relative overflow-hidden">
+        <div className="gradient-blur opacity-50" />
+        <Marquee items={marqueeItems} speed={20} />
+      </div>
+
+      {/* Features Section */}
+      <Section
+        variant="default"
+        gridSize="small"
+        withGradient={true}
+        gradientPosition="right"
+        className="relative overflow-hidden py-16"
+        id="features"
+      >
+        <div className="grid-pattern-overlay opacity-50" />
+        <div className="max-w-7xl mx-auto">
+          <Heading as="h2" size="7xl" className="mb-4">
+            CARATTERISTICHE_
+          </Heading>
+          
+          <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-center mb-20"
+            className="font-sans text-xl mb-12 text-gray-600"
           >
-            <div className="w-16 h-1 bg-black mx-auto mb-8" />
-            <h2 className="font-mono text-4xl font-bold mb-6">
-              COME FUNZIONA
-            </h2>
-            <p className="font-mono text-lg text-gray-700 max-w-2xl mx-auto">
-              Inizia a gestire le tue recensioni in modo efficiente in soli tre semplici passaggi
-            </p>
-          </motion.div>
+            Tutto ciò di cui hai bisogno per gestire le tue recensioni
+          </motion.p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map(({ title, description, icon: Icon, delay }, index) => (
+              <Card 
+                key={title}
+                delay={delay}
+                className="p-8 aspect-[3/4]"
+                hover={true}
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <span className="font-mono text-xl text-black/50">0{index + 1}_</span>
+                  <Icon className="w-6 h-6 text-black" />
+                </div>
+                
+                <h3 className="font-mono text-2xl mb-4">{title}</h3>
+                <p className="font-sans text-gray-600">{description}</p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </Section>
+
+      {/* How it Works Section */}
+      <Section
+        variant="dark"
+        gridSize="large"
+        withGradient={true}
+        gradientPosition="center"
+        className="relative overflow-hidden py-16 bg-black"
+        id="how-it-works"
+      >
+        <div className="grid-pattern-overlay-dark opacity-50" />
+        <div className="max-w-7xl mx-auto">
+          <Heading as="h2" size="7xl" variant="dark" className="text-center mb-4">
+            COME FUNZIONA_
+          </Heading>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-lg text-gray-400 max-w-2xl mx-auto text-center mb-20"
+          >
+            Inizia a gestire le tue recensioni in modo efficiente in soli tre semplici passaggi
+          </motion.p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                className="relative"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
+            {steps.map(({ title, description, icon: Icon }, index) => (
+              <Card
+                key={title}
+                variant="dark"
+                delay={0.4 + index * 0.1}
+                className="p-8 aspect-square"
+                hover={true}
               >
-                <div className="flex flex-col items-center text-center p-8 bg-white/90 backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)]">
-                  <div className="w-16 h-16 flex items-center justify-center bg-black/5 rounded-sm mb-8 group-hover:scale-110 transition-transform">
-                    <step.icon className="w-8 h-8 text-black" />
+                <div className="h-full flex flex-col">
+                  <div className="flex items-center gap-4 mb-8">
+                    <span className="font-mono text-4xl text-white/30">0{index + 1}</span>
+                    <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="font-mono text-xl font-bold mb-4">{step.title}</h3>
-                  <p className="font-mono text-sm text-gray-700 leading-relaxed">{step.description}</p>
+                  
+                  <h3 className="font-mono text-2xl mb-4 text-white">{title}</h3>
+                  <p className="font-sans text-gray-400">{description}</p>
                 </div>
-                {index < steps.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 right-0 w-full h-px bg-black/10 -translate-y-1/2 translate-x-1/2" />
-                )}
-              </motion.div>
+              </Card>
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Enhanced Features */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        {/* Minimal background pattern */}
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.015]" />
-        
-        <div className="max-w-6xl mx-auto relative">
-          <motion.div className="mb-20">
-            <div className="w-16 h-1 bg-black mb-8" />
-            <motion.h2 
-              className="font-mono text-4xl font-bold mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-            >
-              CARATTERISTICHE
-            </motion.h2>
-            <p className="font-mono text-lg text-gray-700 max-w-2xl">
-              Strumenti potenti per gestire la tua reputazione online
-            </p>
-          </motion.div>
+      {/* Testimonials Section */}
+      <Section
+        variant="default"
+        gridSize="small"
+        withGradient={true}
+        gradientPosition="left"
+        className="relative overflow-hidden py-16"
+      >
+        <div className="max-w-7xl mx-auto">
+          <Heading as="h2" size="7xl" className="text-center mb-4">
+            TESTIMONIANZE_
+          </Heading>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-lg text-gray-600 max-w-2xl mx-auto text-center mb-20"
+          >
+            Cosa dicono i nostri clienti
+          </motion.p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((feature) => (
-              <motion.div
-                key={feature.title}
-                className="p-8 bg-white/90 backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: feature.delay }}
+            {testimonials.map(({ quote, author, role, rating }, index) => (
+              <Card
+                key={author}
+                delay={0.4 + index * 0.1}
+                className="p-8 aspect-square"
+                hover={true}
               >
-                <div className="w-12 h-12 flex items-center justify-center bg-black/5 rounded-sm mb-8 group-hover:scale-110 transition-transform">
-                  <feature.icon className="w-6 h-6 text-black" />
-                </div>
-                <h3 className="font-mono text-xl font-bold mb-4">{feature.title}</h3>
-                <p className="font-mono text-sm text-gray-700 leading-relaxed">{feature.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Enhanced Benefits */}
-      <section className="py-32 px-4 bg-black text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.2)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-800" />
-        
-        <div className="max-w-6xl mx-auto relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-center mb-20"
-          >
-            <div className="w-16 h-1 bg-white mx-auto mb-8" />
-            <h2 className="font-mono text-4xl font-bold mb-6">
-              PERCHÉ SCEGLIERE ORION
-            </h2>
-            <p className="font-mono text-lg text-gray-400 max-w-2xl mx-auto">
-              Scopri i vantaggi di una gestione intelligente della reputazione
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {benefits.map((benefit, index) => (
-              <motion.div
-                key={benefit.title}
-                className="p-8 backdrop-blur-sm bg-white/5 rounded-sm border-2 border-white/10 hover:border-white/30 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(255,255,255,0.1)]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
-              >
-                <div className="w-12 h-12 flex items-center justify-center bg-white/10 rounded-sm mb-8 group-hover:scale-110 transition-transform">
-                  <benefit.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="font-mono text-xl font-bold mb-4">{benefit.title}</h3>
-                <p className="font-mono text-sm text-gray-400 leading-relaxed">{benefit.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Enhanced Testimonials */}
-      <section className="py-32 px-4 bg-white/80 backdrop-blur-sm border-y border-black/10 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.02)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px]" />
-        
-        <div className="max-w-6xl mx-auto relative">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-center mb-20"
-          >
-            <div className="w-16 h-1 bg-black mx-auto mb-8" />
-            <h2 className="font-mono text-4xl font-bold mb-6">
-              COSA DICONO I NOSTRI CLIENTI
-            </h2>
-            <p className="font-mono text-lg text-gray-700 max-w-2xl mx-auto">
-              Scopri come Orion ha aiutato altre aziende a migliorare la loro presenza online
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div
-                key={index}
-                className="p-8 bg-white/90 backdrop-blur-sm rounded-sm border-2 border-black/10 hover:border-black/20 transition-all duration-300 group hover:shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)] relative"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + index * 0.1 }}
-              >
-                <div className="flex gap-1 mb-6">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <StarIcon key={i} className="w-5 h-5 text-black fill-current" />
-                  ))}
-                </div>
-                <p className="font-mono text-base text-gray-700 mb-8 leading-relaxed">
-                  "{testimonial.quote}"
-                </p>
-                <div>
-                  <div className="font-mono text-sm font-bold">
-                    {testimonial.author}
+                <div className="h-full flex flex-col">
+                  <div className="flex gap-1 mb-8">
+                    {Array.from({ length: rating }).map((_, i) => (
+                      <StarIcon key={i} className="w-5 h-5 text-yellow-400" />
+                    ))}
                   </div>
-                  <div className="font-mono text-xs text-gray-600 mt-1">
-                    {testimonial.role}
+                  
+                  <p className="font-sans text-gray-600 mb-8 flex-grow">{quote}</p>
+                  
+                  <div>
+                    <div className="font-mono text-lg font-bold">{author}</div>
+                    <div className="font-mono text-sm text-gray-500">{role}</div>
                   </div>
                 </div>
-                <div className="absolute top-4 right-4 w-8 h-8 bg-black/5 rounded-sm flex items-center justify-center">
-                  <BuildingOfficeIcon className="w-4 h-4 text-black" />
-                </div>
-              </motion.div>
+              </Card>
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Enhanced CTA */}
-      <section className="py-32 px-4 bg-black text-white relative overflow-hidden">
-        <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.2)_50%,transparent_75%,transparent_100%)] bg-[length:20px_20px] opacity-20" />
-        <div className="absolute inset-0 bg-gradient-to-br from-black to-gray-800" />
-        
-        <div className="max-w-6xl mx-auto text-center relative">
-          <motion.div
+      {/* Benefits Section */}
+      <Section
+        variant="dark"
+        gridSize="large"
+        withGradient={true}
+        gradientPosition="right"
+        className="relative overflow-hidden py-16 bg-zinc-900"
+      >
+        <div className="max-w-7xl mx-auto">
+          <Heading as="h2" size="7xl" variant="dark" className="text-center mb-4">
+            VANTAGGI_
+          </Heading>
+          
+          <motion.p 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="max-w-3xl mx-auto"
+            className="font-mono text-lg text-gray-400 max-w-2xl mx-auto text-center mb-20"
           >
-            <div className="w-16 h-1 bg-white mx-auto mb-8" />
-            <h2 className="font-mono text-4xl font-bold mb-6">
-              PRONTO A MIGLIORARE LA TUA PRESENZA ONLINE?
-            </h2>
-            <p className="font-mono text-lg text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
-              Unisciti alle aziende che già utilizzano Orion per gestire la loro reputazione online in modo efficiente.
-            </p>
-            <div className="flex items-center justify-center gap-8">
-              <Link
-                href="/auth/signup"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-mono text-sm hover:bg-black hover:text-white border-2 border-white transition-all duration-300 group rounded-sm hover:shadow-[5px_5px_0px_0px_rgba(255,255,255,0.2)] transform hover:-translate-y-0.5"
+            Perché scegliere Orion per la gestione della tua reputazione
+          </motion.p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {benefits.map(({ title, description, icon: Icon }, index) => (
+              <Card
+                key={title}
+                variant="dark"
+                delay={0.4 + index * 0.1}
+                className="p-8 aspect-square"
+                hover={true}
               >
-                INIZIA LA PROVA GRATUITA
-                <ArrowRightIcon className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <span className="font-mono text-sm text-gray-500">
-                Nessuna carta di credito richiesta
-              </span>
-            </div>
-          </motion.div>
+                <div className="h-full flex flex-col">
+                  <Icon className="w-10 h-10 text-white mb-8" />
+                  <h3 className="font-mono text-2xl mb-4 text-white">{title}</h3>
+                  <p className="font-sans text-gray-400">{description}</p>
+                </div>
+              </Card>
+            ))}
+          </div>
         </div>
-      </section>
+      </Section>
 
-      {/* Enhanced Footer */}
-      <footer className="py-20 px-4 border-t border-black/10 bg-white/80 backdrop-blur-sm">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-            <div>
-              <h4 className="font-mono text-sm font-bold mb-6">PRODOTTO</h4>
-              <ul className="space-y-4">
-                <li>
-                  <Link href="/features" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    Caratteristiche
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/pricing" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    Prezzi
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-mono text-sm font-bold mb-6">RISORSE</h4>
-              <ul className="space-y-4">
-                <li>
-                  <Link href="/docs" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    Documentazione
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/api" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    API
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-mono text-sm font-bold mb-6">LEGALE</h4>
-              <ul className="space-y-4">
-                <li>
-                  <Link href="/privacy" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    Privacy
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/terms" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    Termini
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-mono text-sm font-bold mb-6">SOCIAL</h4>
-              <ul className="space-y-4">
-                <li>
-                  <a href="#" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a href="#" className="font-mono text-sm text-gray-700 hover:text-black transition-colors">
-                    LinkedIn
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="mt-20 pt-8 border-t border-black/10">
-            <p className="font-mono text-sm text-gray-700">
-              © 2024 Orion. Tutti i diritti riservati.
-            </p>
-          </div>
+      {/* Pricing Section */}
+      <Section
+        variant="default"
+        gridSize="small"
+        withGradient={true}
+        gradientPosition="center"
+        className="relative overflow-hidden py-16"
+        id="pricing"
+      >
+        <div className="max-w-7xl mx-auto">
+          <Heading as="h2" size="7xl" className="text-center mb-4">
+            PREZZI_
+          </Heading>
+          
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="font-mono text-lg text-gray-600 max-w-2xl mx-auto text-center mb-20"
+          >
+            Scegli il piano più adatto alle tue esigenze
+          </motion.p>
+
+          <PricingTable />
         </div>
-      </footer>
+      </Section>
+
+      {/* Footer */}
+      <Footer />
     </div>
   )
 }

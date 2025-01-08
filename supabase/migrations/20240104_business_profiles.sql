@@ -5,9 +5,6 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     first_name TEXT,
     last_name TEXT,
     company_name TEXT,
-    phone_number TEXT,
-    ip_address TEXT,
-    location JSONB,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL
 );
@@ -30,48 +27,48 @@ ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.business_profiles ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for profiles
-CREATE POLICY "Users can view own profile" 
-    ON public.profiles FOR SELECT 
-    USING (auth.uid() = id);
+CREATE POLICY "Enable insert for authenticated users only" 
+    ON public.profiles FOR INSERT 
+    WITH CHECK (auth.uid() = id);
 
-CREATE POLICY "Users can update own profile" 
-    ON public.profiles FOR UPDATE 
+CREATE POLICY "Enable update for users based on id" 
+    ON public.profiles FOR UPDATE
+    USING (auth.uid() = id)
+    WITH CHECK (auth.uid() = id);
+
+CREATE POLICY "Enable select for users based on id" 
+    ON public.profiles FOR SELECT
     USING (auth.uid() = id);
 
 -- Create policies for business_profiles
-CREATE POLICY "Users can view own business profiles" 
-    ON public.business_profiles FOR SELECT 
-    USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can insert own business profiles" 
+CREATE POLICY "Enable insert for authenticated users only" 
     ON public.business_profiles FOR INSERT 
     WITH CHECK (auth.uid() = user_id);
 
-CREATE POLICY "Users can update own business profiles" 
-    ON public.business_profiles FOR UPDATE 
+CREATE POLICY "Enable update for users based on user_id" 
+    ON public.business_profiles FOR UPDATE
+    USING (auth.uid() = user_id)
+    WITH CHECK (auth.uid() = user_id);
+
+CREATE POLICY "Enable select for users based on user_id" 
+    ON public.business_profiles FOR SELECT
     USING (auth.uid() = user_id);
 
-CREATE POLICY "Users can delete own business profiles" 
-    ON public.business_profiles FOR DELETE 
-    USING (auth.uid() = user_id);
-
--- Create function to handle user creation
-CREATE OR REPLACE FUNCTION public.handle_new_user()
+-- Create trigger for updated_at
+CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
-    INSERT INTO public.profiles (id, email, first_name, last_name, company_name)
-    VALUES (
-        NEW.id,
-        NEW.email,
-        NEW.raw_user_meta_data->>'first_name',
-        NEW.raw_user_meta_data->>'last_name',
-        NEW.raw_user_meta_data->>'company_name'
-    );
+    NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ language 'plpgsql';
 
--- Create trigger for new user creation
-CREATE OR REPLACE TRIGGER on_auth_user_created
-    AFTER INSERT ON auth.users
-    FOR EACH ROW EXECUTE FUNCTION public.handle_new_user(); 
+CREATE TRIGGER update_profiles_updated_at
+    BEFORE UPDATE ON profiles
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_updated_at_column();
+
+CREATE TRIGGER update_business_profiles_updated_at
+    BEFORE UPDATE ON business_profiles
+    FOR EACH ROW
+    EXECUTE PROCEDURE update_updated_at_column(); 

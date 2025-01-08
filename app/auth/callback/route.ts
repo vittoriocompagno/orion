@@ -1,6 +1,5 @@
 import { createClient } from '@/app/utils/supabase/server'
 import { NextResponse } from 'next/server'
-import { cookies } from 'next/headers'
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url)
@@ -9,11 +8,24 @@ export async function GET(request: Request) {
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
+    
     if (!error) {
-      return NextResponse.redirect(requestUrl.origin)
+      const { data: { user } } = await supabase.auth.getUser()
+      
+      // Check if user has completed onboarding
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('onboarding_completed')
+        .eq('id', user?.id)
+        .single()
+
+      if (profile?.onboarding_completed) {
+        return NextResponse.redirect(requestUrl.origin + '/dashboard')
+      } else {
+        return NextResponse.redirect(requestUrl.origin + '/onboarding')
+      }
     }
   }
 
-  // Return the user to an error page with some instructions
-  return NextResponse.redirect(`${requestUrl.origin}/auth/auth-code-error`)
+  return NextResponse.redirect(requestUrl.origin + '/auth/auth-code-error')
 } 
